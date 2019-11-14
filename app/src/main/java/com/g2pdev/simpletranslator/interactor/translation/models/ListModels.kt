@@ -1,13 +1,13 @@
 package com.g2pdev.simpletranslator.interactor.translation.models
 
 import com.g2pdev.simpletranslator.repository.ModelState
+import com.g2pdev.simpletranslator.repository.ModelWithState
 import com.g2pdev.simpletranslator.repository.TranslationModelsRepository
-import com.g2pdev.simpletranslator.translation.language.Language
 import io.reactivex.Single
 import io.reactivex.functions.Function3
 
 interface ListModels {
-    fun exec(): Single<Map<Language, ModelState>>
+    fun exec(): Single<List<ModelWithState>>
 
 }
 
@@ -15,7 +15,7 @@ class ListModelsImpl(
     private val translationModelsRepository: TranslationModelsRepository
 ) : ListModels {
 
-    override fun exec(): Single<Map<Language, ModelState>> {
+    override fun exec(): Single<List<ModelWithState>> {
         return Single.zip(
             translationModelsRepository.listAvailableModels(),
             translationModelsRepository.listDownloadedModels(),
@@ -30,8 +30,8 @@ class ListModelsImpl(
                             else -> ModelState.NOT_DOWNLOADED
                         }
 
-                        model to state
-                    }.toMap()
+                        ModelWithState(model, state)
+                    }
             }
         )
     }

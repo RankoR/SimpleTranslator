@@ -1,8 +1,11 @@
 package com.g2pdev.simpletranslator.ui.mvp.download
 
 import com.g2pdev.simpletranslator.di.DiHolder
+import com.g2pdev.simpletranslator.interactor.translation.models.DownloadModel
 import com.g2pdev.simpletranslator.interactor.translation.models.ListModels
 import com.g2pdev.simpletranslator.interactor.translation.models.ListenModelDownloadingStateChanges
+import com.g2pdev.simpletranslator.repository.ModelState
+import com.g2pdev.simpletranslator.repository.ModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BasePresenter
 import com.g2pdev.simpletranslator.util.schedulersIoToMain
 import moxy.InjectViewState
@@ -14,6 +17,9 @@ class DownloadModelsPresenter : BasePresenter<DownloadModelsView>() {
 
     @Inject
     lateinit var listModels: ListModels
+
+    @Inject
+    lateinit var downloadModel: DownloadModel
 
     @Inject
     lateinit var listenModelDownloadingStateChanges: ListenModelDownloadingStateChanges
@@ -51,4 +57,22 @@ class DownloadModelsPresenter : BasePresenter<DownloadModelsView>() {
             .disposeOnPresenterDestroy()
     }
 
+    fun onModelClick(model: ModelWithState) {
+        Timber.i("Clicked model: $model")
+
+        when (model.state) {
+            ModelState.NOT_DOWNLOADED -> deleteModel(model)
+            ModelState.DOWNLOADED -> downloadModel(model)
+            ModelState.DOWNLOADING -> {
+            }
+        }
+    }
+
+    private fun downloadModel(model: ModelWithState) {
+        // TODO
+    }
+
+    private fun deleteModel(model: ModelWithState) {
+        // TODO
+    }
 }

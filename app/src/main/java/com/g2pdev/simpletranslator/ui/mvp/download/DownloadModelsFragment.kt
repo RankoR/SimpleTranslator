@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
-import com.g2pdev.simpletranslator.repository.ModelState
-import com.g2pdev.simpletranslator.translation.language.Language
+import com.g2pdev.simpletranslator.repository.ModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
+import kotlinx.android.synthetic.main.fragment_download_models.*
 import moxy.presenter.InjectPresenter
 import timber.log.Timber
 
 class DownloadModelsFragment : BaseMvpFragment(), DownloadModelsView {
+
+    private val adapter = DownloadModelsAdapter()
 
     @InjectPresenter
     lateinit var presenter: DownloadModelsPresenter
@@ -22,10 +26,23 @@ class DownloadModelsFragment : BaseMvpFragment(), DownloadModelsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initRecyclerView()
     }
 
-    override fun showModels(languages: Map<Language, ModelState>) {
-        Timber.i("Show models: $languages")
+    private fun initRecyclerView() {
+        adapter.onModelClickListener = { model ->
+            presenter.onModelClick(model)
+        }
+
+        modelsRv.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        modelsRv.adapter = adapter
+    }
+
+    override fun showModels(models: List<ModelWithState>) {
+        Timber.i("Show models: $models")
+
+        adapter.setModels(models)
     }
 
     override fun showError(t: Throwable) {

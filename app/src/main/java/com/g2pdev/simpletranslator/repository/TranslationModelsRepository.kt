@@ -77,6 +77,10 @@ class FirebaseTranslationModelsRepository(
     }
 
     override fun downloadModel(language: Language): Completable {
+        if (downloadingLanguages.contains(language)) {
+            return Completable.error(IllegalStateException("Already downloading this model"))
+        }
+
         return Completable.create { emitter ->
             notifyLanguageDownloading(language)
 
