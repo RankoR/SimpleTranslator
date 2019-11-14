@@ -183,9 +183,6 @@ lint/tmp/
 .idea/dictionaries/
 .idea/misc.xml
 .idea/runConfigurations.xml
-app/
-build.gradle
-gradle.properties
 gradle/
 gradlew
 gradlew.bat
