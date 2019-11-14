@@ -1,6 +1,6 @@
 package com.g2pdev.simpletranslator.translation
 
-import com.g2pdev.simpletranslator.translation.language.LanguageConverter
+import com.g2pdev.simpletranslator.translation.language.FirebaseLanguageConverter
 import com.g2pdev.simpletranslator.translation.language.LanguagePair
 import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator
@@ -14,7 +14,7 @@ interface FirebaseTranslatorProvider {
 
 class FirebaseTranslatorProviderImpl(
     private val firebaseNaturalLanguage: FirebaseNaturalLanguage,
-    private val languageConverter: LanguageConverter
+    private val firebaseLanguageConverter: FirebaseLanguageConverter
 ) : FirebaseTranslatorProvider {
 
     private val translators = mutableMapOf<LanguagePair, FirebaseTranslator>()
@@ -33,11 +33,11 @@ class FirebaseTranslatorProviderImpl(
                 Timber.i("Creating new translator")
 
                 val options = FirebaseTranslatorOptions.Builder()
-                    .setSourceLanguage(languageConverter.convertLanguageToFirebaseCode(languagePair.source))
-                    .setTargetLanguage(languageConverter.convertLanguageToFirebaseCode(languagePair.target))
+                    .setSourceLanguage(firebaseLanguageConverter.convertLanguageToFirebaseCode(languagePair.source))
+                    .setTargetLanguage(firebaseLanguageConverter.convertLanguageToFirebaseCode(languagePair.target))
                     .build()
 
-                val translator = FirebaseNaturalLanguage.getInstance().getTranslator(options)
+                val translator = firebaseNaturalLanguage.getTranslator(options)
 
                 translators[languagePair] = translator
 

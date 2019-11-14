@@ -2,7 +2,7 @@ package com.g2pdev.simpletranslator.translation.language
 
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage
 
-class LanguageConverter {
+class FirebaseLanguageConverter {
 
     fun convertLanguageToFirebaseCode(language: Language): Int {
         return when (language) {
@@ -65,6 +65,72 @@ class LanguageConverter {
             Language.UR -> FirebaseTranslateLanguage.UR
             Language.VI -> FirebaseTranslateLanguage.VI
             Language.ZH -> FirebaseTranslateLanguage.ZH
+            Language.UNKNOWN -> 0
+        }
+    }
+
+    fun convertFirebaseCodeToLanguage(firebaseLanguageCode: Int): Language {
+        return when (firebaseLanguageCode) {
+            FirebaseTranslateLanguage.AF -> Language.AF
+            FirebaseTranslateLanguage.AR -> Language.AR
+            FirebaseTranslateLanguage.BE -> Language.BE
+            FirebaseTranslateLanguage.BG -> Language.BG
+            FirebaseTranslateLanguage.BN -> Language.BN
+            FirebaseTranslateLanguage.CA -> Language.CA
+            FirebaseTranslateLanguage.CS -> Language.CS
+            FirebaseTranslateLanguage.CY -> Language.CY
+            FirebaseTranslateLanguage.DA -> Language.DA
+            FirebaseTranslateLanguage.DE -> Language.DE
+            FirebaseTranslateLanguage.EL -> Language.EL
+            FirebaseTranslateLanguage.EN -> Language.EN
+            FirebaseTranslateLanguage.EO -> Language.EO
+            FirebaseTranslateLanguage.ES -> Language.ES
+            FirebaseTranslateLanguage.ET -> Language.ET
+            FirebaseTranslateLanguage.FA -> Language.FA
+            FirebaseTranslateLanguage.FI -> Language.FI
+            FirebaseTranslateLanguage.FR -> Language.FR
+            FirebaseTranslateLanguage.GA -> Language.GA
+            FirebaseTranslateLanguage.GL -> Language.GL
+            FirebaseTranslateLanguage.GU -> Language.GU
+            FirebaseTranslateLanguage.HE -> Language.HE
+            FirebaseTranslateLanguage.HI -> Language.HI
+            FirebaseTranslateLanguage.HR -> Language.HR
+            FirebaseTranslateLanguage.HT -> Language.HT
+            FirebaseTranslateLanguage.HU -> Language.HU
+            FirebaseTranslateLanguage.ID -> Language.ID
+            FirebaseTranslateLanguage.IS -> Language.IS
+            FirebaseTranslateLanguage.IT -> Language.IT
+            FirebaseTranslateLanguage.JA -> Language.JA
+            FirebaseTranslateLanguage.KA -> Language.KA
+            FirebaseTranslateLanguage.KN -> Language.KN
+            FirebaseTranslateLanguage.KO -> Language.KO
+            FirebaseTranslateLanguage.LT -> Language.LT
+            FirebaseTranslateLanguage.LV -> Language.LV
+            FirebaseTranslateLanguage.MK -> Language.MK
+            FirebaseTranslateLanguage.MR -> Language.MR
+            FirebaseTranslateLanguage.MS -> Language.MS
+            FirebaseTranslateLanguage.MT -> Language.MT
+            FirebaseTranslateLanguage.NL -> Language.NL
+            FirebaseTranslateLanguage.NO -> Language.NO
+            FirebaseTranslateLanguage.PL -> Language.PL
+            FirebaseTranslateLanguage.PT -> Language.PT
+            FirebaseTranslateLanguage.RO -> Language.RO
+            FirebaseTranslateLanguage.RU -> Language.RU
+            FirebaseTranslateLanguage.SK -> Language.SK
+            FirebaseTranslateLanguage.SL -> Language.SL
+            FirebaseTranslateLanguage.SQ -> Language.SQ
+            FirebaseTranslateLanguage.SV -> Language.SV
+            FirebaseTranslateLanguage.SW -> Language.SW
+            FirebaseTranslateLanguage.TA -> Language.TA
+            FirebaseTranslateLanguage.TE -> Language.TE
+            FirebaseTranslateLanguage.TH -> Language.TH
+            FirebaseTranslateLanguage.TL -> Language.TL
+            FirebaseTranslateLanguage.TR -> Language.TR
+            FirebaseTranslateLanguage.UK -> Language.UK
+            FirebaseTranslateLanguage.UR -> Language.UR
+            FirebaseTranslateLanguage.VI -> Language.VI
+            FirebaseTranslateLanguage.ZH -> Language.ZH
+            else -> Language.UNKNOWN
         }
     }
 

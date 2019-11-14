@@ -59,6 +59,9 @@ enum class Language {
     UK,
     UR,
     VI,
-    ZH
+    ZH,
+    UNKNOWN;
+
+    fun isUnknown() = this == UNKNOWN
 }
 
