@@ -9,6 +9,18 @@
         android:id="@+id/translateFragment"
         android:name="com.g2pdev.simpletranslator.ui.mvp.translate.TranslateFragment"
         android:label="fragment_translate"
-        tools:layout="@layout/fragment_translate" />
+        tools:layout="@layout/fragment_translate">
+
+        <action
+            android:id="@+id/actionTranslateFragmentToDownloadModelsFragment"
+            app:destination="@id/downloadModelsFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/downloadModelsFragment"
+        android:name="com.g2pdev.simpletranslator.ui.mvp.download.DownloadModelsFragment"
+        android:label="fragment_download_models"
+        tools:layout="@layout/fragment_download_models" />
 
 </navigation>

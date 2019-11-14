@@ -47,22 +47,19 @@ class TranslationModule {
     @Singleton
     fun provideIsModelDownloaded(
         translationModelsRepository: TranslationModelsRepository
-    ): IsModelDownloaded =
-        IsModelDownloadedImpl(translationModelsRepository)
+    ): IsModelDownloaded = IsModelDownloadedImpl(translationModelsRepository)
 
     @Provides
     @Singleton
     fun provideListAvailableModels(
         translationModelsRepository: TranslationModelsRepository
-    ): ListAvailableModels =
-        ListAvailableModelsImpl(translationModelsRepository)
+    ): ListAvailableModels = ListAvailableModelsImpl(translationModelsRepository)
 
     @Provides
     @Singleton
     fun provideListDownloadedModels(
         translationModelsRepository: TranslationModelsRepository
-    ): ListDownloadedModels =
-        ListDownloadedModelsImpl(translationModelsRepository)
+    ): ListDownloadedModels = ListDownloadedModelsImpl(translationModelsRepository)
 
     @Provides
     @Singleton
@@ -78,4 +75,15 @@ class TranslationModule {
         isModelDownloaded: IsModelDownloaded
     ): Translate = TranslateImpl(translator, isModelDownloaded)
 
+    @Provides
+    @Singleton
+    fun provideListModels(
+        translationModelsRepository: TranslationModelsRepository
+    ): ListModels = ListModelsImpl(translationModelsRepository)
+
+    @Provides
+    @Singleton
+    fun provideListenModelDownloadingStateChanges(
+        translationModelsRepository: TranslationModelsRepository
+    ): ListenModelDownloadingStateChanges = ListenModelDownloadingStateChangesImpl(translationModelsRepository)
 }

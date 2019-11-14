@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
 import com.g2pdev.simpletranslator.util.schedulersIoToMain
@@ -36,6 +37,11 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
                 presenter.translate(text)
             }, Timber::e)
             .disposeOnDestroy()
+
+        downloadModelsBtn.setOnClickListener {
+            val direction = TranslateFragmentDirections.actionTranslateFragmentToDownloadModelsFragment()
+            findNavController().navigate(direction)
+        }
     }
 
     override fun showLoading(loading: Boolean) {
