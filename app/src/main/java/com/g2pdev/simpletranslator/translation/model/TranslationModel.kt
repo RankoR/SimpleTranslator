@@ -8,6 +8,7 @@ data class TranslationModel(
     var ordering: Int = 0
 ) : Comparable<TranslationModel> {
 
+    @delegate:Transient
     val isDeletable by lazy { language == Language.EN }
 
     override fun compareTo(other: TranslationModel): Int {

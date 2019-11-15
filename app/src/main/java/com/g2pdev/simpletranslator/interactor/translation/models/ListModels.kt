@@ -1,8 +1,8 @@
 package com.g2pdev.simpletranslator.interactor.translation.models
 
+import com.g2pdev.simpletranslator.repository.TranslationModelsRepository
 import com.g2pdev.simpletranslator.translation.model.ModelState
 import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
-import com.g2pdev.simpletranslator.repository.TranslationModelsRepository
 import io.reactivex.Single
 import io.reactivex.functions.Function3
 
@@ -32,7 +32,7 @@ class ListModelsImpl(
 
                         TranslationModelWithState(model, state)
                     }
-                    .sortedDescending()
+                    .sorted()
             }
         )
     }
