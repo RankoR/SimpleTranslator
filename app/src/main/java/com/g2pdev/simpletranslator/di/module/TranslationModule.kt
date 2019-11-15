@@ -96,4 +96,10 @@ class TranslationModule {
     fun provideListenModelDownloadingStateChanges(
         translationModelsRepository: TranslationModelsRepository
     ): ListenModelDownloadingStateChanges = ListenModelDownloadingStateChangesImpl(translationModelsRepository)
+
+    @Provides
+    @Singleton
+    fun provideDeleteModel(
+        translationModelsRepository: TranslationModelsRepository
+    ): DeleteModel = DeleteModelImpl(translationModelsRepository)
 }

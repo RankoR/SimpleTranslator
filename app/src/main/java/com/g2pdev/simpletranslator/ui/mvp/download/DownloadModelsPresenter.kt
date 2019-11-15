@@ -1,6 +1,7 @@
 package com.g2pdev.simpletranslator.ui.mvp.download
 
 import com.g2pdev.simpletranslator.di.DiHolder
+import com.g2pdev.simpletranslator.interactor.translation.models.DeleteModel
 import com.g2pdev.simpletranslator.interactor.translation.models.DownloadModel
 import com.g2pdev.simpletranslator.interactor.translation.models.ListModels
 import com.g2pdev.simpletranslator.interactor.translation.models.ListenModelDownloadingStateChanges
@@ -20,6 +21,9 @@ class DownloadModelsPresenter : BasePresenter<DownloadModelsView>() {
 
     @Inject
     lateinit var downloadModel: DownloadModel
+
+    @Inject
+    lateinit var deleteModel: DeleteModel
 
     @Inject
     lateinit var listenModelDownloadingStateChanges: ListenModelDownloadingStateChanges
@@ -79,6 +83,12 @@ class DownloadModelsPresenter : BasePresenter<DownloadModelsView>() {
     }
 
     private fun deleteModel(translationModel: TranslationModelWithState) {
-        // TODO
+        deleteModel
+            .exec(translationModel.model)
+            .schedulersIoToMain()
+            .subscribe({
+                listModels()
+            }, Timber::e)
+            .disposeOnPresenterDestroy()
     }
 }
