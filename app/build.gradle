@@ -30,6 +30,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
@@ -44,6 +48,10 @@ dependencies {
     implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0'
     implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0'
     implementation 'androidx.core:core-ktx:1.1.0'
+
+    // Work
+    implementation 'androidx.work:work-runtime-ktx:2.2.0'
+    implementation 'androidx.work:work-rxjava2:2.2.0'
 
     // Firebase
     implementation 'com.google.firebase:firebase-analytics:17.2.1'
@@ -73,6 +81,9 @@ dependencies {
 
     // JodaTime
     implementation 'joda-time:joda-time:2.10.4'
+
+    // Json
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     // Tests
     testImplementation 'junit:junit:4.12'

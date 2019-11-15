@@ -2,7 +2,7 @@ package com.g2pdev.simpletranslator.ui.mvp.download
 
 import com.g2pdev.simpletranslator.di.DiHolder
 import com.g2pdev.simpletranslator.interactor.translation.models.DeleteModel
-import com.g2pdev.simpletranslator.interactor.translation.models.DownloadModel
+import com.g2pdev.simpletranslator.interactor.translation.models.EnqueueDownloadModel
 import com.g2pdev.simpletranslator.interactor.translation.models.ListModels
 import com.g2pdev.simpletranslator.interactor.translation.models.ListenModelDownloadingStateChanges
 import com.g2pdev.simpletranslator.translation.model.ModelState
@@ -20,7 +20,7 @@ class DownloadModelsPresenter : BasePresenter<DownloadModelsView>() {
     lateinit var listModels: ListModels
 
     @Inject
-    lateinit var downloadModel: DownloadModel
+    lateinit var enqueueDownloadModel: EnqueueDownloadModel
 
     @Inject
     lateinit var deleteModel: DeleteModel
@@ -40,6 +40,8 @@ class DownloadModelsPresenter : BasePresenter<DownloadModelsView>() {
             .exec()
             .schedulersIoToMain()
             .subscribe({
+                Timber.i("Model downloading state changed")
+
                 listModels()
             }, Timber::e)
             .disposeOnPresenterDestroy()
@@ -65,21 +67,17 @@ class DownloadModelsPresenter : BasePresenter<DownloadModelsView>() {
         Timber.i("Clicked model: $translationModel")
 
         when (translationModel.state) {
-            ModelState.NOT_DOWNLOADED -> deleteModel(translationModel)
-            ModelState.DOWNLOADED -> downloadModel(translationModel)
+            ModelState.NOT_DOWNLOADED -> downloadModel(translationModel)
+            ModelState.DOWNLOADED -> deleteModel(translationModel)
             ModelState.DOWNLOADING -> {
             }
         }
     }
 
     private fun downloadModel(translationModel: TranslationModelWithState) {
-        downloadModel
-            .exec(translationModel.model)
-            .schedulersIoToMain()
-            .subscribe({
-                // It does not wait until downloading complete
-            }, Timber::e)
-            .disposeOnPresenterDestroy()
+        Timber.i("Will download model: $translationModel")
+
+        enqueueDownloadModel.exec(translationModel.model)
     }
 
     private fun deleteModel(translationModel: TranslationModelWithState) {

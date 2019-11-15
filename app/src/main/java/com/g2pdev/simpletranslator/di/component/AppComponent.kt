@@ -6,6 +6,7 @@ import com.g2pdev.simpletranslator.di.module.FirebaseModule
 import com.g2pdev.simpletranslator.di.module.TranslationModule
 import com.g2pdev.simpletranslator.ui.mvp.download.DownloadModelsPresenter
 import com.g2pdev.simpletranslator.ui.mvp.translate.TranslatePresenter
+import com.g2pdev.simpletranslator.work.DownloadModelWorker
 import dagger.Component
 import javax.inject.Singleton
 
@@ -20,7 +21,11 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(app: App)
+
+    fun inject(downloadModelWorker: DownloadModelWorker)
+
     fun inject(translatePresenter: TranslatePresenter)
     fun inject(downloadModelsPresenter: DownloadModelsPresenter)
+
 
 }

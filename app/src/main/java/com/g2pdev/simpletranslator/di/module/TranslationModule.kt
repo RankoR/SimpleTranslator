@@ -1,6 +1,7 @@
 package com.g2pdev.simpletranslator.di.module
 
 import android.content.res.Resources
+import androidx.work.WorkManager
 import com.g2pdev.simpletranslator.interactor.translation.Translate
 import com.g2pdev.simpletranslator.interactor.translation.TranslateImpl
 import com.g2pdev.simpletranslator.interactor.translation.models.*
@@ -8,6 +9,8 @@ import com.g2pdev.simpletranslator.repository.FirebaseTranslationModelsRepositor
 import com.g2pdev.simpletranslator.repository.TranslationModelsRepository
 import com.g2pdev.simpletranslator.translation.FirebaseTranslatorProvider
 import com.g2pdev.simpletranslator.translation.FirebaseTranslatorProviderImpl
+import com.g2pdev.simpletranslator.translation.TranslationModelSerializer
+import com.g2pdev.simpletranslator.translation.TranslationModelSerializerImpl
 import com.g2pdev.simpletranslator.translation.language.FirebaseLanguageConverter
 import com.g2pdev.simpletranslator.translation.language.LanguageNameProvider
 import com.g2pdev.simpletranslator.translation.language.LanguageNameProviderImpl
@@ -15,6 +18,7 @@ import com.g2pdev.simpletranslator.translation.translator.FirebaseMLTranslator
 import com.g2pdev.simpletranslator.translation.translator.Translator
 import com.google.firebase.ml.common.modeldownload.FirebaseModelManager
 import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -102,4 +106,17 @@ class TranslationModule {
     fun provideDeleteModel(
         translationModelsRepository: TranslationModelsRepository
     ): DeleteModel = DeleteModelImpl(translationModelsRepository)
+
+    @Provides
+    @Singleton
+    fun provideTranslationModelSerializer(
+        gson: Gson
+    ): TranslationModelSerializer = TranslationModelSerializerImpl(gson)
+
+    @Provides
+    @Singleton
+    fun provideEnqueueDownloadModel(
+        translationModelSerializer: TranslationModelSerializer,
+        workManager: WorkManager
+    ): EnqueueDownloadModel = EnqueueDownloadModelImpl(translationModelSerializer, workManager)
 }

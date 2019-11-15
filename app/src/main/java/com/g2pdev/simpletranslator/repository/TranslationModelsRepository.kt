@@ -11,6 +11,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
 
 interface TranslationModelsRepository {
     fun listAvailableModels(): Single<Collection<TranslationModel>>
@@ -97,6 +98,8 @@ class FirebaseTranslationModelsRepository(
         if (downloadingLanguages.contains(model)) {
             return Completable.error(IllegalStateException("Already downloading this model"))
         }
+
+        Timber.i("Downloading model: $model")
 
         return Completable.create { emitter ->
             notifyLanguageDownloading(model)
