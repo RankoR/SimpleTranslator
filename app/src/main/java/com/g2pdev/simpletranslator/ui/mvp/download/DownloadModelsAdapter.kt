@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
@@ -17,9 +18,12 @@ class DownloadModelsAdapter : RecyclerView.Adapter<DownloadModelsAdapter.ViewHol
     var onModelClickListener: ((translationModel: TranslationModelWithState) -> Unit)? = null
 
     fun setModels(translationModels: List<TranslationModelWithState>) {
-        // TODO: diff
+        val diffUtilCallback = DownloadModelsDiffUtilCallback(models, translationModels)
+        val diffUtilResult = DiffUtil.calculateDiff(diffUtilCallback)
+
         this.models = translationModels
-        this.notifyDataSetChanged()
+
+        diffUtilResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

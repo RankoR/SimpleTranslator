@@ -1,0 +1,22 @@
+package com.g2pdev.simpletranslator.ui.mvp.download
+
+import androidx.recyclerview.widget.DiffUtil
+import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
+
+class DownloadModelsDiffUtilCallback(
+    private val oldList: List<TranslationModelWithState>,
+    private val newList: List<TranslationModelWithState>
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize() = oldList.size
+
+    override fun getNewListSize() = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].model.language == newList[newItemPosition].model.language
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
+    }
+}
