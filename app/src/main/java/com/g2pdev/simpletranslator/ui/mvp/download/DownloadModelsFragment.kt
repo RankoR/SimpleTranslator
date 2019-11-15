@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
-import com.g2pdev.simpletranslator.repository.TranslationModelWithState
+import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
 import kotlinx.android.synthetic.main.fragment_download_models.*
 import moxy.presenter.InjectPresenter

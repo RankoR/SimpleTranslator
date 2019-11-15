@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
-import com.g2pdev.simpletranslator.repository.TranslationModelWithState
+import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
 
 class DownloadModelsAdapter : RecyclerView.Adapter<DownloadModelsAdapter.ViewHolder>() {
 

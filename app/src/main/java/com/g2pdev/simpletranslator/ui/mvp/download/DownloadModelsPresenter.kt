@@ -4,8 +4,8 @@ import com.g2pdev.simpletranslator.di.DiHolder
 import com.g2pdev.simpletranslator.interactor.translation.models.DownloadModel
 import com.g2pdev.simpletranslator.interactor.translation.models.ListModels
 import com.g2pdev.simpletranslator.interactor.translation.models.ListenModelDownloadingStateChanges
-import com.g2pdev.simpletranslator.repository.ModelState
-import com.g2pdev.simpletranslator.repository.TranslationModelWithState
+import com.g2pdev.simpletranslator.translation.model.ModelState
+import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BasePresenter
 import com.g2pdev.simpletranslator.util.schedulersIoToMain
 import moxy.InjectViewState
