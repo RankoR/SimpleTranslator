@@ -1,9 +1,16 @@
 package com.g2pdev.simpletranslator.di.module
 
+import android.content.Context
 import android.content.res.Resources
 import androidx.work.WorkManager
+import com.g2pdev.simpletranslator.cache.TextToTranslateCache
+import com.g2pdev.simpletranslator.cache.TextToTranslateCacheImpl
 import com.g2pdev.simpletranslator.interactor.translation.Translate
 import com.g2pdev.simpletranslator.interactor.translation.TranslateImpl
+import com.g2pdev.simpletranslator.interactor.translation.cache.GetLastTextToTranslate
+import com.g2pdev.simpletranslator.interactor.translation.cache.GetLastTextToTranslateImpl
+import com.g2pdev.simpletranslator.interactor.translation.cache.SaveLastTextToTranslate
+import com.g2pdev.simpletranslator.interactor.translation.cache.SaveLastTextToTranslateImpl
 import com.g2pdev.simpletranslator.interactor.translation.models.*
 import com.g2pdev.simpletranslator.repository.FirebaseTranslationModelsRepository
 import com.g2pdev.simpletranslator.repository.TranslationModelsRepository
@@ -119,4 +126,24 @@ class TranslationModule {
         translationModelSerializer: TranslationModelSerializer,
         workManager: WorkManager
     ): EnqueueDownloadModel = EnqueueDownloadModelImpl(translationModelSerializer, workManager)
+
+    @Provides
+    @Singleton
+    fun provideTextToTranslateCache(
+        gson: Gson,
+        context: Context
+    ): TextToTranslateCache = TextToTranslateCacheImpl(gson, context)
+
+    @Provides
+    @Singleton
+    fun provideGetLastTextToTranslate(
+        textToTranslateCache: TextToTranslateCache
+    ): GetLastTextToTranslate = GetLastTextToTranslateImpl(textToTranslateCache)
+
+    @Provides
+    @Singleton
+    fun provideSaveLastTextToTranslate(
+        textToTranslateCache: TextToTranslateCache
+    ): SaveLastTextToTranslate = SaveLastTextToTranslateImpl(textToTranslateCache)
+
 }

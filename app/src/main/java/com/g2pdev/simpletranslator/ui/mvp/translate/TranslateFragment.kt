@@ -44,6 +44,12 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
         }
     }
 
+    override fun setTextToTranslate(text: String) {
+        Timber.i("Text to translate: $text")
+
+        sourceTv.setText(text)
+    }
+
     override fun showLoading(loading: Boolean) {
         Timber.i("Loading: $loading")
     }
@@ -56,6 +62,11 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
 
     override fun showError(e: Throwable) {
         Timber.e("Error: $e")
+    }
+
+
+    override fun showModelRequired() {
+
     }
 
     private companion object {
