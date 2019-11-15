@@ -7,17 +7,17 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
-import com.g2pdev.simpletranslator.repository.ModelWithState
+import com.g2pdev.simpletranslator.repository.TranslationModelWithState
 
 class DownloadModelsAdapter : RecyclerView.Adapter<DownloadModelsAdapter.ViewHolder>() {
 
-    private var models = emptyList<ModelWithState>()
+    private var models = emptyList<TranslationModelWithState>()
 
-    var onModelClickListener: ((model: ModelWithState) -> Unit)? = null
+    var onModelClickListener: ((translationModel: TranslationModelWithState) -> Unit)? = null
 
-    fun setModels(models: List<ModelWithState>) {
+    fun setModels(translationModels: List<TranslationModelWithState>) {
         // TODO: diff
-        this.models = models
+        this.models = translationModels
         this.notifyDataSetChanged()
     }
 
@@ -44,17 +44,17 @@ class DownloadModelsAdapter : RecyclerView.Adapter<DownloadModelsAdapter.ViewHol
 
         init {
             itemView.setOnClickListener { view ->
-                (view.tag as? ModelWithState)?.let { model ->
+                (view.tag as? TranslationModelWithState)?.let { model ->
                     onModelClickListener?.invoke(model)
                 }
             }
         }
 
-        fun bind(modelWithState: ModelWithState) {
-            itemView.tag = modelWithState
+        fun bind(translationModelWithState: TranslationModelWithState) {
+            itemView.tag = translationModelWithState
 
-            titleTv.text = modelWithState.model.name
-            downloadBtn.text = modelWithState.state.name
+            titleTv.text = translationModelWithState.model.name
+            downloadBtn.text = translationModelWithState.state.name
         }
     }
 

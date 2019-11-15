@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
-import com.g2pdev.simpletranslator.repository.ModelWithState
+import com.g2pdev.simpletranslator.repository.TranslationModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
 import kotlinx.android.synthetic.main.fragment_download_models.*
 import moxy.presenter.InjectPresenter
@@ -39,10 +39,10 @@ class DownloadModelsFragment : BaseMvpFragment(), DownloadModelsView {
         modelsRv.adapter = adapter
     }
 
-    override fun showModels(models: List<ModelWithState>) {
-        Timber.i("Show models: $models")
+    override fun showModels(translationModels: List<TranslationModelWithState>) {
+        Timber.i("Show models: $translationModels")
 
-        adapter.setModels(models)
+        adapter.setModels(translationModels)
     }
 
     override fun showError(t: Throwable) {

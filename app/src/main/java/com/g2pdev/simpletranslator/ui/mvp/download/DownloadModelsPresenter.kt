@@ -5,7 +5,7 @@ import com.g2pdev.simpletranslator.interactor.translation.models.DownloadModel
 import com.g2pdev.simpletranslator.interactor.translation.models.ListModels
 import com.g2pdev.simpletranslator.interactor.translation.models.ListenModelDownloadingStateChanges
 import com.g2pdev.simpletranslator.repository.ModelState
-import com.g2pdev.simpletranslator.repository.ModelWithState
+import com.g2pdev.simpletranslator.repository.TranslationModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BasePresenter
 import com.g2pdev.simpletranslator.util.schedulersIoToMain
 import moxy.InjectViewState
@@ -57,22 +57,28 @@ class DownloadModelsPresenter : BasePresenter<DownloadModelsView>() {
             .disposeOnPresenterDestroy()
     }
 
-    fun onModelClick(model: ModelWithState) {
-        Timber.i("Clicked model: $model")
+    fun onModelClick(translationModel: TranslationModelWithState) {
+        Timber.i("Clicked model: $translationModel")
 
-        when (model.state) {
-            ModelState.NOT_DOWNLOADED -> deleteModel(model)
-            ModelState.DOWNLOADED -> downloadModel(model)
+        when (translationModel.state) {
+            ModelState.NOT_DOWNLOADED -> deleteModel(translationModel)
+            ModelState.DOWNLOADED -> downloadModel(translationModel)
             ModelState.DOWNLOADING -> {
             }
         }
     }
 
-    private fun downloadModel(model: ModelWithState) {
-        // TODO
+    private fun downloadModel(translationModel: TranslationModelWithState) {
+        downloadModel
+            .exec(translationModel.model)
+            .schedulersIoToMain()
+            .subscribe({
+                // It does not wait until downloading complete
+            }, Timber::e)
+            .disposeOnPresenterDestroy()
     }
 
-    private fun deleteModel(model: ModelWithState) {
+    private fun deleteModel(translationModel: TranslationModelWithState) {
         // TODO
     }
 }

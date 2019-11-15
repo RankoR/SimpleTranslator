@@ -8,6 +8,7 @@
         android:id="@+id/sourceTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:importantForAutofill="no"
         android:inputType="text"
         app:layout_constraintTop_toTopOf="parent" />

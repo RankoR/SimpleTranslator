@@ -1,5 +1,6 @@
 package com.g2pdev.simpletranslator.di.module
 
+import android.content.res.Resources
 import com.g2pdev.simpletranslator.interactor.translation.Translate
 import com.g2pdev.simpletranslator.interactor.translation.TranslateImpl
 import com.g2pdev.simpletranslator.interactor.translation.models.*
@@ -8,6 +9,8 @@ import com.g2pdev.simpletranslator.repository.TranslationModelsRepository
 import com.g2pdev.simpletranslator.translation.FirebaseTranslatorProvider
 import com.g2pdev.simpletranslator.translation.FirebaseTranslatorProviderImpl
 import com.g2pdev.simpletranslator.translation.language.FirebaseLanguageConverter
+import com.g2pdev.simpletranslator.translation.language.LanguageNameProvider
+import com.g2pdev.simpletranslator.translation.language.LanguageNameProviderImpl
 import com.g2pdev.simpletranslator.translation.translator.FirebaseMLTranslator
 import com.g2pdev.simpletranslator.translation.translator.Translator
 import com.google.firebase.ml.common.modeldownload.FirebaseModelManager
@@ -25,10 +28,17 @@ class TranslationModule {
 
     @Provides
     @Singleton
+    fun provideLanguageNameProvider(
+        resources: Resources
+    ): LanguageNameProvider = LanguageNameProviderImpl(resources)
+
+    @Provides
+    @Singleton
     fun provideTranslationModelsRepository(
         firebaseModelManager: FirebaseModelManager,
-        firebaseLanguageConverter: FirebaseLanguageConverter
-    ): TranslationModelsRepository = FirebaseTranslationModelsRepository(firebaseModelManager, firebaseLanguageConverter)
+        firebaseLanguageConverter: FirebaseLanguageConverter,
+        languageNameProvider: LanguageNameProvider
+    ): TranslationModelsRepository = FirebaseTranslationModelsRepository(firebaseModelManager, firebaseLanguageConverter, languageNameProvider)
 
     @Provides
     @Singleton

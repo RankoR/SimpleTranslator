@@ -2,6 +2,8 @@ package com.g2pdev.simpletranslator.repository
 
 import com.g2pdev.simpletranslator.translation.language.FirebaseLanguageConverter
 import com.g2pdev.simpletranslator.translation.language.Language
+import com.g2pdev.simpletranslator.translation.language.LanguageNameProvider
+import com.g2pdev.simpletranslator.translation.model.TranslationModel
 import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions
 import com.google.firebase.ml.common.modeldownload.FirebaseModelManager
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateRemoteModel
@@ -11,39 +13,44 @@ import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 
 interface TranslationModelsRepository {
-    fun listAvailableModels(): Single<Collection<Language>>
-    fun listDownloadedModels(): Single<Collection<Language>>
+    fun listAvailableModels(): Single<Collection<TranslationModel>>
+    fun listDownloadedModels(): Single<Collection<TranslationModel>>
+    fun isModelDownloaded(model: TranslationModel): Single<Boolean>
     fun isModelDownloaded(language: Language): Single<Boolean>
-    fun downloadModel(language: Language): Completable
-    fun getDownloadingModels(): Single<Collection<Language>>
+    fun downloadModel(model: TranslationModel): Completable
+    fun getDownloadingModels(): Single<Collection<TranslationModel>>
 
     fun getDownloadingStateChangedObservable(): Observable<Unit>
 }
 
 class FirebaseTranslationModelsRepository(
     private val firebaseModelManager: FirebaseModelManager,
-    private val firebaseLanguageConverter: FirebaseLanguageConverter
+    private val firebaseLanguageConverter: FirebaseLanguageConverter,
+    private val languageNameProvider: LanguageNameProvider
 ) : TranslationModelsRepository {
 
     private val downloadingStateChangedPublishSubject = PublishSubject.create<Unit>()
 
-    private val downloadingLanguages = mutableSetOf<Language>()
+    private val downloadingLanguages = mutableSetOf<TranslationModel>()
 
-    override fun listAvailableModels(): Single<Collection<Language>> {
+    override fun listAvailableModels(): Single<Collection<TranslationModel>> {
         val languages = Language
             .values()
             .filter { !it.isUnknown() }
+            .map { it.toTranslationModel() }
             .toSet()
 
         return Single.just(languages)
     }
 
-    override fun listDownloadedModels(): Single<Collection<Language>> {
+    override fun listDownloadedModels(): Single<Collection<TranslationModel>> {
         return Single.create { emitter ->
             firebaseModelManager
                 .getDownloadedModels(FirebaseTranslateRemoteModel::class.java)
                 .addOnSuccessListener { models ->
-                    val convertedModels = models.map { firebaseLanguageConverter.convertFirebaseCodeToLanguage(it.language) }
+                    val convertedModels = models
+                        .map { firebaseLanguageConverter.convertFirebaseCodeToLanguage(it.language) }
+                        .map { it.toTranslationModel() }
 
                     if (!emitter.isDisposed) {
                         emitter.onSuccess(convertedModels)
@@ -57,12 +64,12 @@ class FirebaseTranslationModelsRepository(
         }
     }
 
-    override fun isModelDownloaded(language: Language): Single<Boolean> {
+    override fun isModelDownloaded(model: TranslationModel): Single<Boolean> {
         return Single.create { emitter ->
-            val model = language.toFirebaseModel()
+            val firebaseModel = model.language.toFirebaseModel()
 
             firebaseModelManager
-                .isModelDownloaded(model)
+                .isModelDownloaded(firebaseModel)
                 .addOnSuccessListener {
                     if (!emitter.isDisposed) {
                         emitter.onSuccess(it)
@@ -76,39 +83,43 @@ class FirebaseTranslationModelsRepository(
         }
     }
 
-    override fun downloadModel(language: Language): Completable {
-        if (downloadingLanguages.contains(language)) {
+    override fun isModelDownloaded(language: Language): Single<Boolean> {
+        return isModelDownloaded(language.toTranslationModel())
+    }
+
+    override fun downloadModel(model: TranslationModel): Completable {
+        if (downloadingLanguages.contains(model)) {
             return Completable.error(IllegalStateException("Already downloading this model"))
         }
 
         return Completable.create { emitter ->
-            notifyLanguageDownloading(language)
+            notifyLanguageDownloading(model)
 
-            val model = language.toFirebaseModel()
+            val firebaseModel = model.language.toFirebaseModel()
 
             firebaseModelManager
-                .download(model, getModelDownloadConditions())
+                .download(firebaseModel, getModelDownloadConditions())
                 .addOnSuccessListener {
-                    notifyLanguageNotDownloading(language)
+                    notifyLanguageNotDownloading(model)
 
                     if (!emitter.isDisposed) {
                         emitter.onComplete()
                     }
                 }
                 .addOnFailureListener {
-                    notifyLanguageNotDownloading(language)
+                    notifyLanguageNotDownloading(model)
 
                     if (!emitter.isDisposed) {
                         emitter.onError(it)
                     }
                 }
                 .addOnCanceledListener {
-                    notifyLanguageNotDownloading(language)
+                    notifyLanguageNotDownloading(model)
                 }
         }
     }
 
-    override fun getDownloadingModels(): Single<Collection<Language>> {
+    override fun getDownloadingModels(): Single<Collection<TranslationModel>> {
         return Single.just(downloadingLanguages)
     }
 
@@ -121,13 +132,13 @@ class FirebaseTranslationModelsRepository(
         return FirebaseModelDownloadConditions.Builder().build()
     }
 
-    private fun notifyLanguageDownloading(language: Language) {
-        downloadingLanguages.add(language)
+    private fun notifyLanguageDownloading(model: TranslationModel) {
+        downloadingLanguages.add(model)
         notifyDownloadingStateChanged()
     }
 
-    private fun notifyLanguageNotDownloading(language: Language) {
-        downloadingLanguages.remove(language)
+    private fun notifyLanguageNotDownloading(model: TranslationModel) {
+        downloadingLanguages.remove(model)
         notifyDownloadingStateChanged()
     }
 
@@ -139,6 +150,14 @@ class FirebaseTranslationModelsRepository(
         val languageCode = firebaseLanguageConverter.convertLanguageToFirebaseCode(this)
 
         return FirebaseTranslateRemoteModel.Builder(languageCode).build()
+    }
+
+    private fun Language.toTranslationModel(ordering: Int = 0): TranslationModel {
+        return TranslationModel(
+            this,
+            languageNameProvider.getNameForLanguage(this),
+            ordering
+        )
     }
 
 }

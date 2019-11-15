@@ -1,6 +1,7 @@
 package com.g2pdev.simpletranslator.di.module
 
 import android.content.Context
+import android.content.res.Resources
 import com.g2pdev.simpletranslator.BuildConfig
 import dagger.Module
 import dagger.Provides
@@ -25,5 +26,11 @@ class AppModule(
             throw IllegalStateException("Create tree for production")
         }
     }
+
+    @Provides
+    @Singleton
+    fun provideResources(
+        context: Context
+    ): Resources = context.resources
 
 }
