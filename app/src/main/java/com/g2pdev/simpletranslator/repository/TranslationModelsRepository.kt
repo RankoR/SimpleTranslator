@@ -14,13 +14,19 @@ import io.reactivex.subjects.PublishSubject
 
 interface TranslationModelsRepository {
     fun listAvailableModels(): Single<Collection<TranslationModel>>
+
     fun listDownloadedModels(): Single<Collection<TranslationModel>>
+
     fun isModelDownloaded(model: TranslationModel): Single<Boolean>
     fun isModelDownloaded(language: Language): Single<Boolean>
+
     fun downloadModel(model: TranslationModel): Completable
+
     fun getDownloadingModels(): Single<Collection<TranslationModel>>
 
     fun getDownloadingStateChangedObservable(): Observable<Unit>
+
+    fun deleteModel(model: TranslationModel): Completable
 }
 
 class FirebaseTranslationModelsRepository(
@@ -125,6 +131,25 @@ class FirebaseTranslationModelsRepository(
 
     override fun getDownloadingStateChangedObservable(): Observable<Unit> {
         return downloadingStateChangedPublishSubject
+    }
+
+    override fun deleteModel(model: TranslationModel): Completable {
+        return Completable.create { emitter ->
+            val firebaseModel = model.language.toFirebaseModel()
+
+            firebaseModelManager
+                .deleteDownloadedModel(firebaseModel)
+                .addOnSuccessListener {
+                    if (!emitter.isDisposed) {
+                        emitter.onComplete()
+                    }
+                }
+                .addOnFailureListener {
+                    if (!emitter.isDisposed) {
+                        emitter.onError(it)
+                    }
+                }
+        }
     }
 
     private fun getModelDownloadConditions(): FirebaseModelDownloadConditions {
