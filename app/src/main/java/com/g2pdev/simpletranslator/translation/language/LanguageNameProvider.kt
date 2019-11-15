@@ -16,7 +16,7 @@ class LanguageNameProviderImpl(
     @StringRes
     override fun getNameResIdForLanguage(language: Language): Int {
         return when (language) {
-            Language.AF -> R.string.language_name_ar
+            Language.AF -> R.string.language_name_af
             Language.AR -> R.string.language_name_ar
             Language.BE -> R.string.language_name_be
             Language.BG -> R.string.language_name_bg
