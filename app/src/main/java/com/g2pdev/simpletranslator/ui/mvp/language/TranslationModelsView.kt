@@ -5,7 +5,7 @@ import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
-interface DownloadModelsView : MvpView {
+interface TranslationModelsView : MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showModels(translationModels: List<TranslationModelWithState>)

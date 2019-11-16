@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
 
-class DownloadModelsAdapter : RecyclerView.Adapter<DownloadModelsAdapter.ViewHolder>() {
+class TranslationModelsAdapter : RecyclerView.Adapter<TranslationModelsAdapter.ViewHolder>() {
 
     private var models = emptyList<TranslationModelWithState>()
 
     var onModelClickListener: ((translationModel: TranslationModelWithState) -> Unit)? = null
 
     fun setModels(translationModels: List<TranslationModelWithState>) {
-        val diffUtilCallback = DownloadModelsDiffUtilCallback(models, translationModels)
+        val diffUtilCallback = TranslationModelsDiffUtilCallback(models, translationModels)
         val diffUtilResult = DiffUtil.calculateDiff(diffUtilCallback)
 
         this.models = translationModels

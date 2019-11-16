@@ -14,7 +14,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @InjectViewState
-class DownloadModelsPresenter : BasePresenter<DownloadModelsView>() {
+class TranslationModelsPresenter : BasePresenter<TranslationModelsView>() {
 
     @Inject
     lateinit var listModels: ListModels

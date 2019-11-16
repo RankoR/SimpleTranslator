@@ -9,19 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
-import kotlinx.android.synthetic.main.fragment_download_models.*
+import kotlinx.android.synthetic.main.fragment_translation_models.*
 import moxy.presenter.InjectPresenter
 import timber.log.Timber
 
-class DownloadModelsFragment : BaseMvpFragment(), DownloadModelsView {
+class TranslationModelsFragment : BaseMvpFragment(), TranslationModelsView {
 
-    private val adapter = DownloadModelsAdapter()
+    private val adapter = TranslationModelsAdapter()
 
     @InjectPresenter
-    lateinit var presenter: DownloadModelsPresenter
+    lateinit var presenter: TranslationModelsPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_download_models, container, false)
+        return inflater.inflate(R.layout.fragment_translation_models, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
