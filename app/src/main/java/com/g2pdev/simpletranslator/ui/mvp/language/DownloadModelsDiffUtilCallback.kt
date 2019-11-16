@@ -1,4 +1,4 @@
-package com.g2pdev.simpletranslator.ui.mvp.download
+package com.g2pdev.simpletranslator.ui.mvp.language
 
 import androidx.recyclerview.widget.DiffUtil
 import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState

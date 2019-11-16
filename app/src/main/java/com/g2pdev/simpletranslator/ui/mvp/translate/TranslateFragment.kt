@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.translation.language.LanguagePair
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
-import com.g2pdev.simpletranslator.ui.mvp.download.dialog.ModelDownloadRequiredFragment
+import com.g2pdev.simpletranslator.ui.mvp.language.download.ModelDownloadRequiredFragment
 import com.g2pdev.simpletranslator.util.schedulersIoToMain
 import com.jakewharton.rxbinding3.widget.textChanges
 import kotlinx.android.synthetic.main.fragment_translate.*

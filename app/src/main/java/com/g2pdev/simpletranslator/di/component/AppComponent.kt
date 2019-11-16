@@ -4,7 +4,7 @@ import com.g2pdev.simpletranslator.App
 import com.g2pdev.simpletranslator.di.module.AppModule
 import com.g2pdev.simpletranslator.di.module.FirebaseModule
 import com.g2pdev.simpletranslator.di.module.TranslationModule
-import com.g2pdev.simpletranslator.ui.mvp.download.DownloadModelsPresenter
+import com.g2pdev.simpletranslator.ui.mvp.language.DownloadModelsPresenter
 import com.g2pdev.simpletranslator.ui.mvp.translate.TranslatePresenter
 import com.g2pdev.simpletranslator.work.DownloadModelWorker
 import dagger.Component

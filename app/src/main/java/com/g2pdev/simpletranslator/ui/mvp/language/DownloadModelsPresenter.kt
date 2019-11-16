@@ -1,4 +1,4 @@
-package com.g2pdev.simpletranslator.ui.mvp.download
+package com.g2pdev.simpletranslator.ui.mvp.language
 
 import com.g2pdev.simpletranslator.di.DiHolder
 import com.g2pdev.simpletranslator.interactor.translation.models.DeleteModel

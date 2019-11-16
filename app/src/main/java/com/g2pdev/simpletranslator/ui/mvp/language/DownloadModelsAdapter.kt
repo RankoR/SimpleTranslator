@@ -1,4 +1,4 @@
-package com.g2pdev.simpletranslator.ui.mvp.download
+package com.g2pdev.simpletranslator.ui.mvp.language
 
 import android.view.LayoutInflater
 import android.view.View
