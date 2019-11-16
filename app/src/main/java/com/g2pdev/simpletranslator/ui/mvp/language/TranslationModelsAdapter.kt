@@ -16,6 +16,7 @@ class TranslationModelsAdapter : RecyclerView.Adapter<TranslationModelsAdapter.V
     private var models = emptyList<TranslationModelWithState>()
 
     var onModelClickListener: ((translationModel: TranslationModelWithState) -> Unit)? = null
+    var onModelActionButtonClickListener: ((translationModel: TranslationModelWithState) -> Unit)? = null
 
     fun setModels(translationModels: List<TranslationModelWithState>) {
         val diffUtilCallback = TranslationModelsDiffUtilCallback(models, translationModels)
@@ -49,8 +50,14 @@ class TranslationModelsAdapter : RecyclerView.Adapter<TranslationModelsAdapter.V
 
         init {
             itemView.setOnClickListener { view ->
-                (view.tag as? TranslationModelWithState)?.let { model ->
+                view.getTranslationModelFromTag()?.let { model ->
                     onModelClickListener?.invoke(model)
+                }
+            }
+
+            downloadBtn.setOnClickListener { view ->
+                view.getTranslationModelFromTag()?.let { model ->
+                    onModelActionButtonClickListener?.invoke(model)
                 }
             }
         }
@@ -61,6 +68,10 @@ class TranslationModelsAdapter : RecyclerView.Adapter<TranslationModelsAdapter.V
             titleTv.text = translationModelWithState.model.name
             downloadBtn.text = translationModelWithState.state.name
             downloadBtn.isVisible = !translationModelWithState.model.isDeletable
+        }
+
+        private fun View.getTranslationModelFromTag(): TranslationModelWithState? {
+            return tag as? TranslationModelWithState
         }
     }
 
