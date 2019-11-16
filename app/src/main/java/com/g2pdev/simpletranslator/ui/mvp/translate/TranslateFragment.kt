@@ -44,6 +44,18 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
             val direction = TranslateFragmentDirections.actionTranslateFragmentToDownloadModelsFragment()
             findNavController().navigate(direction)
         }
+
+        sourceLanguageTv.setOnClickListener {
+            presenter.onSourceLanguageChangeClick()
+        }
+
+        targetLanguageTv.setOnClickListener {
+            presenter.onTargetLanguageChangeClick()
+        }
+
+        swapLanguagesBtn.setOnClickListener {
+            presenter.onSwapLanguagesClick()
+        }
     }
 
     override fun setTextToTranslate(text: String) {
@@ -71,10 +83,23 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
     }
 
     override fun disableLanguageChange(disable: Boolean) {
-        // TODO
+        sourceLanguageTv.isEnabled = !disable
+        targetLanguageTv.isEnabled = !disable
+        swapLanguagesBtn.isEnabled = !disable
     }
 
     override fun showLanguagePair(languagePair: LanguagePair) {
+        Timber.i("Show language pair: $languagePair")
+
+        sourceLanguageTv.text = languagePair.source.name
+        targetLanguageTv.text = languagePair.source.name
+    }
+
+    override fun showSourceLanguageChooser() {
+        // TODO
+    }
+
+    override fun showTargetLanguageChooser() {
         // TODO
     }
 

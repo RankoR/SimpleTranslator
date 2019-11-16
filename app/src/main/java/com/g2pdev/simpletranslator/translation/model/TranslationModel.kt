@@ -16,6 +16,10 @@ data class TranslationModel(
     @delegate:Transient
     val isDeletable by lazy { language == Language.EN }
 
+    @IgnoredOnParcel
+    @delegate:Transient
+    val isAuto by lazy { language == Language.UNKNOWN }
+
     override fun compareTo(other: TranslationModel): Int {
         return when {
             ordering != other.ordering -> this.ordering - other.ordering

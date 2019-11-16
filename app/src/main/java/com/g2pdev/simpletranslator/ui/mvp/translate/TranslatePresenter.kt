@@ -8,6 +8,7 @@ import com.g2pdev.simpletranslator.interactor.translation.cache.SaveLastTextToTr
 import com.g2pdev.simpletranslator.interactor.translation.cache.SaveTranslationLanguagePair
 import com.g2pdev.simpletranslator.translation.exception.ModelNotDownloadedException
 import com.g2pdev.simpletranslator.translation.language.LanguagePair
+import com.g2pdev.simpletranslator.translation.model.TranslationModel
 import com.g2pdev.simpletranslator.ui.mvp.base.BasePresenter
 import com.g2pdev.simpletranslator.util.schedulersIoToMain
 import moxy.InjectViewState
@@ -41,6 +42,10 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
     override fun attachView(view: TranslateView?) {
         super.attachView(view)
 
+        loadTranslationLanguagesAndReTranslate()
+    }
+
+    private fun loadTranslationLanguagesAndReTranslate() {
         getTranslationLanguagePair
             .exec()
             .doOnSuccess(viewState::showLanguagePair)
@@ -58,11 +63,28 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
             .disposeOnPresenterDestroy()
     }
 
-    fun onLanguagePairChanged(languagePair: LanguagePair) {
-        // TODO: Call this from fragment
+    fun onSourceLanguageChangeClick() {
+        viewState.showSourceLanguageChooser()
+    }
 
-        saveTranslationLanguagePair
-            .exec(languagePair)
+    fun onTargetLanguageChangeClick() {
+        viewState.showTargetLanguageChooser()
+    }
+
+    fun onSwapLanguagesClick() {
+        getTranslationLanguagePair
+            .exec()
+            .map { languagePair ->
+                if (languagePair.source.isAuto || languagePair.target.isAuto) {
+                    throw IllegalStateException("Can not swap when one of languages is auto")
+                } else {
+                    LanguagePair(
+                        source = languagePair.target,
+                        target = languagePair.source
+                    )
+                }
+            }
+            .flatMapCompletable(saveTranslationLanguagePair::exec)
             .schedulersIoToMain()
             .doOnSubscribe {
                 viewState.disableInputs(true)
@@ -72,10 +94,16 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
                 viewState.disableInputs(false)
                 viewState.disableLanguageChange(false)
             }
-            .subscribe({
-                // TODO: Re-translate
-            }, Timber::e)
+            .subscribe(::loadTranslationLanguagesAndReTranslate, Timber::e)
             .disposeOnPresenterDestroy()
+    }
+
+    fun onSourceLanguageChanged(sourceLanguage: TranslationModel) {
+        loadTranslationLanguagesAndReTranslate()
+    }
+
+    fun onTargetLanguageChanged(targetLanguage: TranslationModel) {
+        loadTranslationLanguagesAndReTranslate()
     }
 
     fun translate(text: String) {

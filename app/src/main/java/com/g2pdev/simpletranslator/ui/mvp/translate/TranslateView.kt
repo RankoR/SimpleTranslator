@@ -18,6 +18,12 @@ interface TranslateView : MvpView {
     fun showLanguagePair(languagePair: LanguagePair)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showSourceLanguageChooser()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showTargetLanguageChooser()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
     fun setTextToTranslate(text: String)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
