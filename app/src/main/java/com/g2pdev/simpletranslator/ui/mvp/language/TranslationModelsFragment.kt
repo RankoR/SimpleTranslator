@@ -4,21 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
+import com.g2pdev.simpletranslator.translation.model.TranslationModel
 import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
-import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
+import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpBottomSheetFragment
 import kotlinx.android.synthetic.main.fragment_translation_models.*
 import moxy.presenter.InjectPresenter
 import timber.log.Timber
 
-class TranslationModelsFragment : BaseMvpFragment(), TranslationModelsView {
+class TranslationModelsFragment : BaseMvpBottomSheetFragment(), TranslationModelsView {
 
     private val adapter = TranslationModelsAdapter()
 
     @InjectPresenter
     lateinit var presenter: TranslationModelsPresenter
+
+    var onModelSelectedListener: ((model: TranslationModel) -> Unit)? = null
+    var onCloseListener: (() -> Unit)? = null
+
+    override fun getFragmentTag() = fragmentTag
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_translation_models, container, false)
@@ -27,13 +35,16 @@ class TranslationModelsFragment : BaseMvpFragment(), TranslationModelsView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        arguments?.let {
+            presenter.screenType = it.getSerializable(argScreenType) as TranslationModelsPresenter.ScreenType
+        }
+
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
-        adapter.onModelClickListener = { model ->
-            presenter.onModelClick(model)
-        }
+        adapter.onModelClickListener = presenter::onModelClick
+        adapter.onModelActionButtonClickListener = presenter::onActionButtonClick
 
         modelsRv.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         modelsRv.adapter = adapter
@@ -45,7 +56,40 @@ class TranslationModelsFragment : BaseMvpFragment(), TranslationModelsView {
         adapter.setModels(translationModels)
     }
 
+    override fun notifyModelSelected(translationModelWithState: TranslationModelWithState) {
+        onModelSelectedListener?.invoke(translationModelWithState.model)
+    }
+
     override fun showError(t: Throwable) {
         Timber.e(t)
+    }
+
+    override fun showModelNotDownloadedSelectionError() {
+        Toast.makeText(context, R.string.error_model_not_downloaded_selection_error, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDestroyView() {
+        onCloseListener?.invoke()
+
+        onCloseListener = null
+        onModelSelectedListener = null
+
+        super.onDestroyView()
+    }
+
+    override fun close() {
+        dismiss()
+    }
+
+    companion object {
+        private const val fragmentTag = "TranslationModelsFragment"
+        private const val argScreenType = "screen_type"
+
+        fun newInstance(screenType: TranslationModelsPresenter.ScreenType): TranslationModelsFragment {
+            val fragment = TranslationModelsFragment()
+            fragment.arguments = bundleOf(argScreenType to screenType)
+
+            return fragment
+        }
     }
 }

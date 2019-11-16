@@ -4,4 +4,7 @@
     <!-- Model required dialog -->
     <string name="message_model_dialog_required">Languages %1$s and %2$s are required to be downloaded to translate text</string>
     <string name="title_model_dialog_required_btn">Download</string>
+
+    <!-- Model selection dialog -->
+    <string name="error_model_not_downloaded_selection_error">Please download model before selecting it</string>
 </resources>

@@ -11,16 +11,7 @@
         android:label="fragment_translate"
         tools:layout="@layout/fragment_translate">
 
-        <action
-            android:id="@+id/actionTranslateFragmentToDownloadModelsFragment"
-            app:destination="@id/downloadModelsFragment" />
-
     </fragment>
 
-    <fragment
-        android:id="@+id/downloadModelsFragment"
-        android:name="com.g2pdev.simpletranslator.ui.mvp.language.TranslationModelsFragment"
-        android:label="fragment_download_models"
-        tools:layout="@layout/fragment_translation_models" />
 
 </navigation>

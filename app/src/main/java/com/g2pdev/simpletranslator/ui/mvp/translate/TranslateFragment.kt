@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.translation.language.LanguagePair
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
+import com.g2pdev.simpletranslator.ui.mvp.language.TranslationModelsFragment
+import com.g2pdev.simpletranslator.ui.mvp.language.TranslationModelsPresenter
 import com.g2pdev.simpletranslator.ui.mvp.language.download.ModelDownloadRequiredFragment
 import com.g2pdev.simpletranslator.util.schedulersIoToMain
 import com.jakewharton.rxbinding3.widget.textChanges
@@ -41,8 +42,8 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
             .disposeOnDestroy()
 
         downloadModelsBtn.setOnClickListener {
-            val direction = TranslateFragmentDirections.actionTranslateFragmentToDownloadModelsFragment()
-            findNavController().navigate(direction)
+            val translationModelsFragment = TranslationModelsFragment.newInstance(TranslationModelsPresenter.ScreenType.DOWNLOADER)
+            translationModelsFragment.show(fragmentManager)
         }
 
         sourceLanguageTv.setOnClickListener {
@@ -92,22 +93,27 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
         Timber.i("Show language pair: $languagePair")
 
         sourceLanguageTv.text = languagePair.source.name
-        targetLanguageTv.text = languagePair.source.name
+        targetLanguageTv.text = languagePair.target.name
     }
 
     override fun showSourceLanguageChooser() {
-        // TODO
+        val translationModelsFragment = TranslationModelsFragment.newInstance(TranslationModelsPresenter.ScreenType.CHOOSER)
+        translationModelsFragment.show(fragmentManager)
     }
 
     override fun showTargetLanguageChooser() {
-        // TODO
+        val translationModelsFragment = TranslationModelsFragment.newInstance(TranslationModelsPresenter.ScreenType.CHOOSER)
+        translationModelsFragment.show(fragmentManager)
     }
 
     override fun showModelRequired(languagePair: LanguagePair) {
         val fragment = ModelDownloadRequiredFragment.newInstance(languagePair)
         fragment.onDownloadClickListener = {
-            val direction = TranslateFragmentDirections.actionTranslateFragmentToDownloadModelsFragment()
-            findNavController().navigate(direction)
+            val translationFragment = TranslationModelsFragment.newInstance(TranslationModelsPresenter.ScreenType.DOWNLOADER)
+            translationFragment.onCloseListener = {
+                presenter.loadTranslationLanguagesAndReTranslate()
+            }
+            translationFragment.show(fragmentManager)
         }
         fragment.show(fragmentManager)
     }

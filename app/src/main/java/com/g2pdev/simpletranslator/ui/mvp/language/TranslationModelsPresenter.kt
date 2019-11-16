@@ -28,6 +28,8 @@ class TranslationModelsPresenter : BasePresenter<TranslationModelsView>() {
     @Inject
     lateinit var listenModelDownloadingStateChanges: ListenModelDownloadingStateChanges
 
+    var screenType = ScreenType.DOWNLOADER
+
     init {
         DiHolder.appComponent.inject(this)
 
@@ -66,6 +68,25 @@ class TranslationModelsPresenter : BasePresenter<TranslationModelsView>() {
     fun onModelClick(translationModel: TranslationModelWithState) {
         Timber.i("Clicked model: $translationModel")
 
+        if (screenType == ScreenType.DOWNLOADER) {
+            performModelActions(translationModel)
+        } else {
+            if (translationModel.state == ModelState.DOWNLOADED) {
+                viewState.notifyModelSelected(translationModel)
+                viewState.close()
+            } else {
+                viewState.showModelNotDownloadedSelectionError()
+            }
+        }
+    }
+
+    fun onActionButtonClick(translationModel: TranslationModelWithState) {
+        Timber.i("Clicked action button for model: $translationModel")
+
+        performModelActions(translationModel)
+    }
+
+    private fun performModelActions(translationModel: TranslationModelWithState) {
         when (translationModel.state) {
             ModelState.NOT_DOWNLOADED -> downloadModel(translationModel)
             ModelState.DOWNLOADED -> deleteModel(translationModel)
@@ -84,9 +105,15 @@ class TranslationModelsPresenter : BasePresenter<TranslationModelsView>() {
         deleteModel
             .exec(translationModel.model)
             .schedulersIoToMain()
-            .subscribe({
-                listModels()
-            }, Timber::e)
+            .subscribe(::listModels, Timber::e)
             .disposeOnPresenterDestroy()
+    }
+
+    /**
+     * Type
+     */
+    enum class ScreenType {
+        DOWNLOADER,
+        CHOOSER
     }
 }

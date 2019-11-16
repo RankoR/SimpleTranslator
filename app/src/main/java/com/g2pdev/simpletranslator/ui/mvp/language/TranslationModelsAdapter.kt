@@ -64,6 +64,7 @@ class TranslationModelsAdapter : RecyclerView.Adapter<TranslationModelsAdapter.V
 
         fun bind(translationModelWithState: TranslationModelWithState) {
             itemView.tag = translationModelWithState
+            downloadBtn.tag = translationModelWithState
 
             titleTv.text = translationModelWithState.model.name
             downloadBtn.text = translationModelWithState.state.name

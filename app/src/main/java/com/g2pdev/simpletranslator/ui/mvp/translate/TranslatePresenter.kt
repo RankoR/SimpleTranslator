@@ -18,8 +18,6 @@ import javax.inject.Inject
 @InjectViewState
 class TranslatePresenter : BasePresenter<TranslateView>() {
 
-    // TODO: Available languages
-
     @Inject
     lateinit var getTranslationLanguagePair: GetTranslationLanguagePair
 
@@ -45,7 +43,7 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
         loadTranslationLanguagesAndReTranslate()
     }
 
-    private fun loadTranslationLanguagesAndReTranslate() {
+    fun loadTranslationLanguagesAndReTranslate() {
         getTranslationLanguagePair
             .exec()
             .doOnSuccess(viewState::showLanguagePair)
