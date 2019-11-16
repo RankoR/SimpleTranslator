@@ -33,8 +33,8 @@ class FirebaseTranslatorProviderImpl(
                 Timber.i("Creating new translator")
 
                 val options = FirebaseTranslatorOptions.Builder()
-                    .setSourceLanguage(firebaseLanguageConverter.convertLanguageToFirebaseCode(languagePair.source))
-                    .setTargetLanguage(firebaseLanguageConverter.convertLanguageToFirebaseCode(languagePair.target))
+                    .setSourceLanguage(firebaseLanguageConverter.convertLanguageToFirebaseCode(languagePair.source.language))
+                    .setTargetLanguage(firebaseLanguageConverter.convertLanguageToFirebaseCode(languagePair.target.language))
                     .build()
 
                 val translator = firebaseNaturalLanguage.getTranslator(options)

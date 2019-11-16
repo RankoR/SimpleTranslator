@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.g2pdev.simpletranslator.R
+import com.g2pdev.simpletranslator.translation.language.LanguagePair
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
+import com.g2pdev.simpletranslator.ui.mvp.download.dialog.ModelDownloadRequiredFragment
 import com.g2pdev.simpletranslator.util.schedulersIoToMain
 import com.jakewharton.rxbinding3.widget.textChanges
 import kotlinx.android.synthetic.main.fragment_translate.*
@@ -57,20 +59,36 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
     override fun showTranslation(text: String) {
         Timber.i("Translation: $text")
 
-        targetTv.setText(text)
+        targetTv.text = text
     }
 
     override fun showError(e: Throwable) {
         Timber.e("Error: $e")
     }
 
+    override fun disableInputs(disable: Boolean) {
+        sourceTv.isEnabled = !disable
+    }
 
-    override fun showModelRequired() {
+    override fun disableLanguageChange(disable: Boolean) {
+        // TODO
+    }
 
+    override fun showLanguagePair(languagePair: LanguagePair) {
+        // TODO
+    }
+
+    override fun showModelRequired(languagePair: LanguagePair) {
+        val fragment = ModelDownloadRequiredFragment.newInstance(languagePair)
+        fragment.onDownloadClickListener = {
+            val direction = TranslateFragmentDirections.actionTranslateFragmentToDownloadModelsFragment()
+            findNavController().navigate(direction)
+        }
+        fragment.show(fragmentManager)
     }
 
     private companion object {
-        private const val inputDebounceTime = 300L
+        private const val inputDebounceTime = 200L
         private const val minTextLength = 2
     }
 }

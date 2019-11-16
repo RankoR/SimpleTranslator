@@ -5,12 +5,11 @@ import android.content.res.Resources
 import androidx.work.WorkManager
 import com.g2pdev.simpletranslator.cache.TextToTranslateCache
 import com.g2pdev.simpletranslator.cache.TextToTranslateCacheImpl
+import com.g2pdev.simpletranslator.cache.TranslationModelsCache
+import com.g2pdev.simpletranslator.cache.TranslationModelsCacheImpl
 import com.g2pdev.simpletranslator.interactor.translation.Translate
 import com.g2pdev.simpletranslator.interactor.translation.TranslateImpl
-import com.g2pdev.simpletranslator.interactor.translation.cache.GetLastTextToTranslate
-import com.g2pdev.simpletranslator.interactor.translation.cache.GetLastTextToTranslateImpl
-import com.g2pdev.simpletranslator.interactor.translation.cache.SaveLastTextToTranslate
-import com.g2pdev.simpletranslator.interactor.translation.cache.SaveLastTextToTranslateImpl
+import com.g2pdev.simpletranslator.interactor.translation.cache.*
 import com.g2pdev.simpletranslator.interactor.translation.models.*
 import com.g2pdev.simpletranslator.repository.FirebaseTranslationModelsRepository
 import com.g2pdev.simpletranslator.repository.TranslationModelsRepository
@@ -146,4 +145,23 @@ class TranslationModule {
         textToTranslateCache: TextToTranslateCache
     ): SaveLastTextToTranslate = SaveLastTextToTranslateImpl(textToTranslateCache)
 
+    @Provides
+    @Singleton
+    fun provideTranslationModelsCache(
+        gson: Gson,
+        context: Context
+    ): TranslationModelsCache = TranslationModelsCacheImpl(gson, context)
+
+    @Provides
+    @Singleton
+    fun provideGetTranslationLanguagePair(
+        translationModelsCache: TranslationModelsCache,
+        languageNameProvider: LanguageNameProvider
+    ): GetTranslationLanguagePair = GetTranslationLanguagePairImpl(translationModelsCache, languageNameProvider)
+
+    @Provides
+    @Singleton
+    fun provideSaveTranslationLanguagePair(
+        translationModelsCache: TranslationModelsCache
+    ): SaveTranslationLanguagePair = SaveTranslationLanguagePairImpl(translationModelsCache)
 }

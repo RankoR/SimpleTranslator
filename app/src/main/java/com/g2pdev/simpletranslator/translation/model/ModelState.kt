@@ -4,6 +4,6 @@ enum class ModelState(
     val value: Int
 ) {
     NOT_DOWNLOADED(2),
-    DOWNLOADING(1),
+    DOWNLOADING(0),
     DOWNLOADED(0)
 }

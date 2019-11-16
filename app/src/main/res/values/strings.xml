@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Simple Translator</string>
+
+    <!-- Model required dialog -->
+    <string name="message_model_dialog_required">Languages %1$s and %2$s are required to be downloaded to translate text</string>
+    <string name="title_model_dialog_required_btn">Download</string>
 </resources>

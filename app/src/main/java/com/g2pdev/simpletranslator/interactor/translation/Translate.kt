@@ -27,7 +27,7 @@ class TranslateImpl(
             if (isDownloaded) {
                 translator.translate(languagePair, text)
             } else {
-                Single.error(ModelNotDownloadedException())
+                Single.error(ModelNotDownloadedException(languagePair))
             }
         }
     }
