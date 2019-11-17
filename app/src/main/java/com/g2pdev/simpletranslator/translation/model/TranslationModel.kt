@@ -13,12 +13,10 @@ data class TranslationModel(
 ) : Comparable<TranslationModel>, Parcelable {
 
     @IgnoredOnParcel
-    @delegate:Transient
-    val isDeletable by lazy { language == Language.EN }
+    val isDeletable = language == Language.EN
 
     @IgnoredOnParcel
-    @delegate:Transient
-    val isAuto by lazy { language == Language.UNKNOWN }
+    val isAuto = language == Language.UNKNOWN
 
     override fun compareTo(other: TranslationModel): Int {
         return when {
