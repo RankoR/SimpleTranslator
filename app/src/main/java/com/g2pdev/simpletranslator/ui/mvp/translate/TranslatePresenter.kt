@@ -97,11 +97,25 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
     }
 
     fun onSourceLanguageChanged(sourceLanguage: TranslationModel) {
-        loadTranslationLanguagesAndReTranslate()
+        getTranslationLanguagePair
+            .exec()
+            .flatMapCompletable {
+                saveTranslationLanguagePair
+                    .exec(it.copyWithReplacedSourceLanguage(sourceLanguage))
+            }
+            .subscribe(::loadTranslationLanguagesAndReTranslate, Timber::e)
+            .disposeOnPresenterDestroy()
     }
 
     fun onTargetLanguageChanged(targetLanguage: TranslationModel) {
-        loadTranslationLanguagesAndReTranslate()
+        getTranslationLanguagePair
+            .exec()
+            .flatMapCompletable {
+                saveTranslationLanguagePair
+                    .exec(it.copyWithReplacedTargetLanguage(targetLanguage))
+            }
+            .subscribe(::loadTranslationLanguagesAndReTranslate, Timber::e)
+            .disposeOnPresenterDestroy()
     }
 
     fun translate(text: String) {

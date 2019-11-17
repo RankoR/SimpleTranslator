@@ -97,11 +97,15 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
 
     override fun showSourceLanguageChooser() {
         val translationModelsFragment = TranslationModelsFragment.newInstance(TranslationModelsPresenter.ScreenType.CHOOSER)
+        translationModelsFragment.onModelSelectedListener = presenter::onSourceLanguageChanged
+
         translationModelsFragment.show(fragmentManager)
     }
 
     override fun showTargetLanguageChooser() {
         val translationModelsFragment = TranslationModelsFragment.newInstance(TranslationModelsPresenter.ScreenType.CHOOSER)
+        translationModelsFragment.onModelSelectedListener = presenter::onTargetLanguageChanged
+
         translationModelsFragment.show(fragmentManager)
     }
 

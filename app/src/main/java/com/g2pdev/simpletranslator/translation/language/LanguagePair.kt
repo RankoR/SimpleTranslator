@@ -8,4 +8,20 @@ import kotlinx.android.parcel.Parcelize
 data class LanguagePair(
     val source: TranslationModel,
     val target: TranslationModel
-) : Parcelable
+) : Parcelable {
+
+    fun copyWithReplacedSourceLanguage(newSource: TranslationModel): LanguagePair {
+        return LanguagePair(
+            newSource,
+            this.target
+        )
+    }
+
+    fun copyWithReplacedTargetLanguage(newTarget: TranslationModel): LanguagePair {
+        return LanguagePair(
+            this.source,
+            newTarget
+        )
+    }
+
+}
