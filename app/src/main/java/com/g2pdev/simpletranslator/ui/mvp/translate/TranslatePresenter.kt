@@ -121,11 +121,13 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
 
                 viewState.showTranslation(translatedText)
             }, { e ->
-                Timber.e(e)
-
                 if (e is ModelNotDownloadedException) {
+                    Timber.i("Model not downloaded yet")
+
                     viewState.showModelRequired(e.languagePair)
                 } else {
+                    Timber.e(e)
+
                     viewState.showError(e)
                 }
             })
