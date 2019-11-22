@@ -1,6 +1,6 @@
 package com.g2pdev.simpletranslator.interactor.translation.models
 
-import com.g2pdev.simpletranslator.repository.TranslationModelsRepository
+import com.g2pdev.simpletranslator.repository.translation.TranslationModelsRepository
 import com.g2pdev.simpletranslator.translation.language.Language
 import com.g2pdev.simpletranslator.translation.model.TranslationModel
 import io.reactivex.Single

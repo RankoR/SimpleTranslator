@@ -11,8 +11,8 @@ import com.g2pdev.simpletranslator.interactor.translation.Translate
 import com.g2pdev.simpletranslator.interactor.translation.TranslateImpl
 import com.g2pdev.simpletranslator.interactor.translation.cache.*
 import com.g2pdev.simpletranslator.interactor.translation.models.*
-import com.g2pdev.simpletranslator.repository.FirebaseTranslationModelsRepository
-import com.g2pdev.simpletranslator.repository.TranslationModelsRepository
+import com.g2pdev.simpletranslator.repository.translation.FirebaseTranslationModelsRepository
+import com.g2pdev.simpletranslator.repository.translation.TranslationModelsRepository
 import com.g2pdev.simpletranslator.translation.FirebaseTranslatorProvider
 import com.g2pdev.simpletranslator.translation.FirebaseTranslatorProviderImpl
 import com.g2pdev.simpletranslator.translation.TranslationModelSerializer
@@ -48,7 +48,8 @@ class TranslationModule {
         firebaseModelManager: FirebaseModelManager,
         firebaseLanguageConverter: FirebaseLanguageConverter,
         languageNameProvider: LanguageNameProvider
-    ): TranslationModelsRepository = FirebaseTranslationModelsRepository(firebaseModelManager, firebaseLanguageConverter, languageNameProvider)
+    ): TranslationModelsRepository =
+        FirebaseTranslationModelsRepository(firebaseModelManager, firebaseLanguageConverter, languageNameProvider)
 
     @Provides
     @Singleton

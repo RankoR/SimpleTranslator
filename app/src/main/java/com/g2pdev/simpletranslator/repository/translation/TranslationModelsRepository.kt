@@ -1,4 +1,4 @@
-package com.g2pdev.simpletranslator.repository
+package com.g2pdev.simpletranslator.repository.translation
 
 import com.g2pdev.simpletranslator.translation.language.FirebaseLanguageConverter
 import com.g2pdev.simpletranslator.translation.language.Language
