@@ -19,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_translation_models.*
 import moxy.presenter.InjectPresenter
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 class TranslationModelsFragment : BaseMvpBottomSheetFragment(), TranslationModelsView {
 
@@ -62,6 +63,7 @@ class TranslationModelsFragment : BaseMvpBottomSheetFragment(), TranslationModel
     private fun initSearch() {
         searchEt
             .textChanges()
+            .debounce(200L, TimeUnit.MILLISECONDS)
             .map { it.toString() }
             .map { it.trim() }
             .observeOn(AndroidSchedulers.mainThread())
