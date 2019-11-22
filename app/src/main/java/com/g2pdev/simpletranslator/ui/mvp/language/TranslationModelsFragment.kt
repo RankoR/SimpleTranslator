@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
@@ -13,8 +14,8 @@ import com.g2pdev.simpletranslator.translation.model.TranslationModel
 import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpBottomSheetFragment
 import com.g2pdev.simpletranslator.util.schedulersIoToMain
-import com.g2pdev.simpletranslator.util.setOnRightDrawableClicked
 import com.jakewharton.rxbinding3.widget.textChanges
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_translation_models.*
 import moxy.presenter.InjectPresenter
 import timber.log.Timber
@@ -63,18 +64,20 @@ class TranslationModelsFragment : BaseMvpBottomSheetFragment(), TranslationModel
             .textChanges()
             .map { it.toString() }
             .map { it.trim() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { clearSearchIv.isVisible = it.isNotEmpty() }
             .map(presenter::filterModels)
             .schedulersIoToMain()
             .subscribe(::showModels, Timber::e)
             .disposeOnDestroy()
 
-        searchEt.setOnRightDrawableClicked { searchEt.setText("") }
+        clearSearchIv.setOnClickListener { searchEt.setText("") }
     }
 
     override fun showModels(translationModels: List<TranslationModelWithState>) {
         Timber.i("Show models: $translationModels")
 
-//        adapter.setModels(translationModels)
+        adapter.setModels(translationModels)
     }
 
     override fun notifyModelSelected(translationModelWithState: TranslationModelWithState) {
@@ -87,6 +90,10 @@ class TranslationModelsFragment : BaseMvpBottomSheetFragment(), TranslationModel
 
     override fun showModelNotDownloadedSelectionError() {
         Toast.makeText(context, R.string.error_model_not_downloaded_selection_error, Toast.LENGTH_LONG).show()
+    }
+
+    override fun showClearSearchButton(show: Boolean) {
+        clearSearchIv.isVisible = show
     }
 
     override fun onDestroyView() {

@@ -36,12 +36,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:drawableEnd="@drawable/ic_search_clear"
+                android:hint="@string/hint_model_search"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:lines="1"
                 android:maxLines="1"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
                 app:layout_constraintTop_toBottomOf="@id/closeIv" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/clearSearchIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/searchEt"
+                app:srcCompat="@drawable/ic_search_clear"
+                tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

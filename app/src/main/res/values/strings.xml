@@ -7,4 +7,5 @@
 
     <!-- Model selection dialog -->
     <string name="error_model_not_downloaded_selection_error">Please download model before selecting it</string>
+    <string name="hint_model_search">Search for language…</string>
 </resources>
