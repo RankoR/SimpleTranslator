@@ -30,6 +30,8 @@ class TranslationModelsPresenter : BasePresenter<TranslationModelsView>() {
 
     var screenType = ScreenType.DOWNLOADER
 
+    private var models: List<TranslationModelWithState>? = null
+
     init {
         DiHolder.appComponent.inject(this)
 
@@ -56,6 +58,7 @@ class TranslationModelsPresenter : BasePresenter<TranslationModelsView>() {
             .subscribe({ models ->
                 Timber.i("Got models: $models")
 
+                this.models = models
                 viewState.showModels(models)
             }, {
                 Timber.e(it)
@@ -63,6 +66,16 @@ class TranslationModelsPresenter : BasePresenter<TranslationModelsView>() {
                 viewState.showError(it)
             })
             .disposeOnPresenterDestroy()
+    }
+
+    fun filterModels(query: String): List<TranslationModelWithState> {
+        if (query.isBlank()) {
+            return models ?: emptyList()
+        }
+
+        return models
+            ?.filter { it.model.name.contains(query, true) }
+            ?: emptyList()
     }
 
     fun onModelClick(translationModel: TranslationModelWithState) {

@@ -12,11 +12,16 @@ import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.translation.model.TranslationModel
 import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpBottomSheetFragment
+import com.g2pdev.simpletranslator.util.schedulersIoToMain
+import com.g2pdev.simpletranslator.util.setOnRightDrawableClicked
+import com.jakewharton.rxbinding3.widget.textChanges
 import kotlinx.android.synthetic.main.fragment_translation_models.*
 import moxy.presenter.InjectPresenter
 import timber.log.Timber
 
 class TranslationModelsFragment : BaseMvpBottomSheetFragment(), TranslationModelsView {
+
+    override val isFullscreen = true
 
     private val adapter = TranslationModelsAdapter()
 
@@ -39,7 +44,10 @@ class TranslationModelsFragment : BaseMvpBottomSheetFragment(), TranslationModel
             presenter.screenType = it.getSerializable(argScreenType) as TranslationModelsPresenter.ScreenType
         }
 
+        closeIv.setOnClickListener { dismiss() }
+
         initRecyclerView()
+        initSearch()
     }
 
     private fun initRecyclerView() {
@@ -50,10 +58,23 @@ class TranslationModelsFragment : BaseMvpBottomSheetFragment(), TranslationModel
         modelsRv.adapter = adapter
     }
 
+    private fun initSearch() {
+        searchEt
+            .textChanges()
+            .map { it.toString() }
+            .map { it.trim() }
+            .map(presenter::filterModels)
+            .schedulersIoToMain()
+            .subscribe(::showModels, Timber::e)
+            .disposeOnDestroy()
+
+        searchEt.setOnRightDrawableClicked { searchEt.setText("") }
+    }
+
     override fun showModels(translationModels: List<TranslationModelWithState>) {
         Timber.i("Show models: $translationModels")
 
-        adapter.setModels(translationModels)
+//        adapter.setModels(translationModels)
     }
 
     override fun notifyModelSelected(translationModelWithState: TranslationModelWithState) {

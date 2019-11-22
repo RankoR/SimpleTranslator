@@ -5,6 +5,9 @@ import com.g2pdev.simpletranslator.translation.language.Language
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * TODO: Keywords for search in other languages
+ */
 @Parcelize
 data class TranslationModel(
     val language: Language,
