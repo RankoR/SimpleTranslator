@@ -29,4 +29,31 @@ data class FavoriteTranslation(
 
     @ColumnInfo(name = "target_text")
     val targetText: String
-)
+) {
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is FavoriteTranslation) {
+            return false
+        }
+
+        if (sourceLanguageCode != other.sourceLanguageCode) {
+            return false
+        }
+
+        if (targetLanguageCode != other.targetLanguageCode) {
+            return false
+        }
+
+        if (sourceText != other.sourceText) {
+            return false
+        }
+
+        if (targetText != other.targetText) {
+            return false
+        }
+
+        return true
+    }
+
+
+}

@@ -16,6 +16,9 @@ interface FavoriteTranslationsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun add(favoriteTranslation: FavoriteTranslation): Completable
 
+    @Query("SELECT COUNT(*) FROM favorite_translations WHERE source_language = :sourceLanguageCode AND target_language = :targetLanguageCode AND source_text = :sourceText AND target_text = :targetText")
+    fun getCount(sourceLanguageCode: String, targetLanguageCode: String, sourceText: String, targetText: String): Single<Int>
+
     @Query("DELETE FROM favorite_translations WHERE source_language = :sourceLanguageCode AND target_language = :targetLanguageCode AND source_text = :sourceText AND target_text = :targetText")
     fun delete(sourceLanguageCode: String, targetLanguageCode: String, sourceText: String, targetText: String): Completable
 

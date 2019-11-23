@@ -11,7 +11,7 @@ interface FavoriteTranslationsRepository {
     fun addTranslation(favoriteTranslation: FavoriteTranslation): Completable
     fun deleteTranslation(favoriteTranslation: FavoriteTranslation): Completable
 
-    fun containsTranslation(sourceText: String, targetText: String): Single<Boolean>
+    fun containsTranslation(favoriteTranslation: FavoriteTranslation): Single<Boolean>
 }
 
 class FavoriteTranslationsRepositoryImpl(
@@ -19,7 +19,11 @@ class FavoriteTranslationsRepositoryImpl(
 ) : FavoriteTranslationsRepository {
 
     override fun getTranslations(): Single<List<FavoriteTranslation>> {
-        return favoriteTranslationsDao.getAll()
+        return favoriteTranslationsDao
+            .getAll()
+            .map { translations ->
+                translations.sortedByDescending { it.id }
+            }
     }
 
     override fun addTranslation(favoriteTranslation: FavoriteTranslation): Completable {
@@ -27,18 +31,23 @@ class FavoriteTranslationsRepositoryImpl(
     }
 
     override fun deleteTranslation(favoriteTranslation: FavoriteTranslation): Completable {
-        return favoriteTranslationsDao.delete(
-            favoriteTranslation.sourceLanguageCode,
-            favoriteTranslation.targetLanguageCode,
-            favoriteTranslation.sourceText,
-            favoriteTranslation.targetText
-        )
+        return favoriteTranslationsDao
+            .delete(
+                favoriteTranslation.sourceLanguageCode,
+                favoriteTranslation.targetLanguageCode,
+                favoriteTranslation.sourceText,
+                favoriteTranslation.targetText
+            )
     }
 
-    override fun containsTranslation(sourceText: String, targetText: String): Single<Boolean> {
-        return getTranslations()
-            .map { translationFavorites ->
-                translationFavorites.find { it.sourceText == sourceText && it.targetText == targetText } != null
-            }
+    override fun containsTranslation(favoriteTranslation: FavoriteTranslation): Single<Boolean> {
+        return favoriteTranslationsDao
+            .getCount(
+                favoriteTranslation.sourceLanguageCode,
+                favoriteTranslation.targetLanguageCode,
+                favoriteTranslation.sourceText,
+                favoriteTranslation.targetText
+            )
+            .map { it > 0 }
     }
 }
