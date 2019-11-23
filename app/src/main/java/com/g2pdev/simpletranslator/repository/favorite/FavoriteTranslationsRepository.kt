@@ -10,6 +10,8 @@ interface FavoriteTranslationsRepository {
     fun getTranslations(): Single<List<FavoriteTranslation>>
     fun addTranslation(favoriteTranslation: FavoriteTranslation): Completable
     fun deleteTranslation(favoriteTranslation: FavoriteTranslation): Completable
+
+    fun containsTranslation(sourceText: String, targetText: String): Single<Boolean>
 }
 
 class FavoriteTranslationsRepositoryImpl(
@@ -25,7 +27,18 @@ class FavoriteTranslationsRepositoryImpl(
     }
 
     override fun deleteTranslation(favoriteTranslation: FavoriteTranslation): Completable {
-        return favoriteTranslationsDao.delete(favoriteTranslation)
+        return favoriteTranslationsDao.delete(
+            favoriteTranslation.sourceLanguageCode,
+            favoriteTranslation.targetLanguageCode,
+            favoriteTranslation.sourceText,
+            favoriteTranslation.targetText
+        )
     }
 
+    override fun containsTranslation(sourceText: String, targetText: String): Single<Boolean> {
+        return getTranslations()
+            .map { translationFavorites ->
+                translationFavorites.find { it.sourceText == sourceText && it.targetText == targetText } != null
+            }
+    }
 }

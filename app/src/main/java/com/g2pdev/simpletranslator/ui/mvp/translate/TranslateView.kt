@@ -12,6 +12,9 @@ interface TranslateView : MvpView {
     fun disableInputs(disable: Boolean)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
+    fun enableAddToFavorites(enable: Boolean)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
     fun disableLanguageChange(disable: Boolean)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
@@ -37,4 +40,10 @@ interface TranslateView : MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun showModelRequired(languagePair: LanguagePair)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showAddedToFavorites()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showTranslationIsInFavorites(isInFavorites: Boolean)
 }

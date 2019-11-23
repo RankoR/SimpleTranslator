@@ -1,0 +1,70 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "8e2051d36cd57df03e2853e0fe8c7a7b",
+    "entities": [
+      {
+        "tableName": "favorite_translations",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `source_language` TEXT NOT NULL, `target_language` TEXT NOT NULL, `source_text` TEXT NOT NULL, `target_text` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sourceLanguageCode",
+            "columnName": "source_language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "targetLanguageCode",
+            "columnName": "target_language",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sourceText",
+            "columnName": "source_text",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "targetText",
+            "columnName": "target_text",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_favorite_translations_source_language_target_language_source_text_target_text",
+            "unique": true,
+            "columnNames": [
+              "source_language",
+              "target_language",
+              "source_text",
+              "target_text"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_favorite_translations_source_language_target_language_source_text_target_text` ON `${TABLE_NAME}` (`source_language`, `target_language`, `source_text`, `target_text`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8e2051d36cd57df03e2853e0fe8c7a7b')"
+    ]
+  }
+}

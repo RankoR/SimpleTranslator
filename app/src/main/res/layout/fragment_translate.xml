@@ -56,13 +56,58 @@
         android:inputType="text"
         app:layout_constraintTop_toBottomOf="@id/languagesLayout" />
 
-    <TextView
-        android:id="@+id/targetTv"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/targetLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:importantForAutofill="no"
-        app:layout_constraintTop_toBottomOf="@id/sourceTv" />
+        app:layout_constraintTop_toBottomOf="@id/sourceTv">
+
+        <TextView
+            android:id="@+id/targetTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:importantForAutofill="no"
+            android:paddingBottom="48dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Test translation" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/targetTv"
+            app:layout_constraintTop_toBottomOf="@id/targetTv">
+
+            <Button
+                android:id="@+id/addToFavoritesBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save" />
+
+            <Button
+                android:id="@+id/copyBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Copy" />
+
+            <Button
+                android:id="@+id/shareBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share" />
+
+            <Button
+                android:id="@+id/ttsBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TTS" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <Button
         android:id="@+id/downloadModelsBtn"
@@ -70,6 +115,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Download models"
-        app:layout_constraintTop_toBottomOf="@id/targetTv" />
+        app:layout_constraintTop_toBottomOf="@id/targetLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

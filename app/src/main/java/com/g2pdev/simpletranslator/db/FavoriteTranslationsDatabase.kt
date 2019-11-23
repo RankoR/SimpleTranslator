@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase
 
     version = 1
 )
-abstract class TranslatorDatabase : RoomDatabase() {
+abstract class FavoriteTranslationsDatabase : RoomDatabase() {
 
     abstract fun favoriteTranslationsDao(): FavoriteTranslationsDao
 }

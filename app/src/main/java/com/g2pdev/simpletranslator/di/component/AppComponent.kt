@@ -1,9 +1,17 @@
 package com.g2pdev.simpletranslator.di.component
 
 import com.g2pdev.simpletranslator.App
-import com.g2pdev.simpletranslator.di.module.*
+import com.g2pdev.simpletranslator.di.module.AppModule
+import com.g2pdev.simpletranslator.di.module.FavoritesModule
+import com.g2pdev.simpletranslator.di.module.FirebaseModule
+import com.g2pdev.simpletranslator.di.module.TranslationModule
+import com.g2pdev.simpletranslator.interactor.favorite.AddFavoriteTranslation
+import com.g2pdev.simpletranslator.interactor.favorite.DeleteFavoriteTranslation
+import com.g2pdev.simpletranslator.interactor.favorite.GetFavoriteTranslations
+import com.g2pdev.simpletranslator.interactor.favorite.TranslationIsInFavorites
 import com.g2pdev.simpletranslator.ui.mvp.language.TranslationModelsPresenter
 import com.g2pdev.simpletranslator.ui.mvp.translate.TranslatePresenter
+import com.g2pdev.simpletranslator.util.DbTestHelper
 import com.g2pdev.simpletranslator.work.DownloadModelWorker
 import dagger.Component
 import javax.inject.Singleton
@@ -13,12 +21,17 @@ import javax.inject.Singleton
         AppModule::class,
         FirebaseModule::class,
         TranslationModule::class,
-        DatabaseModule::class,
         FavoritesModule::class
     ]
 )
 @Singleton
 interface AppComponent {
+
+    val getFavoriteTranslations: GetFavoriteTranslations
+    val addFavoriteTranslation: AddFavoriteTranslation
+    val deleteFavoriteTranslation: DeleteFavoriteTranslation
+    val translationIsInFavorites: TranslationIsInFavorites
+    val dbTestHelper: DbTestHelper
 
     fun inject(app: App)
 
@@ -26,6 +39,5 @@ interface AppComponent {
 
     fun inject(translatePresenter: TranslatePresenter)
     fun inject(translationModelsPresenter: TranslationModelsPresenter)
-
 
 }

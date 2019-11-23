@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.translation.language.LanguagePair
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
@@ -55,6 +56,13 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
 
         swapLanguagesBtn.setOnClickListener {
             presenter.onSwapLanguagesClick()
+        }
+
+        addToFavoritesBtn.setOnClickListener {
+            presenter.addToFavorites(
+                sourceText = sourceTv.text.toString(),
+                targetText = targetTv.text.toString()
+            )
         }
     }
 
@@ -119,6 +127,18 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
             translationFragment.show(fragmentManager)
         }
         fragment.show(fragmentManager)
+    }
+
+    override fun enableAddToFavorites(enable: Boolean) {
+        addToFavoritesBtn.isEnabled = enable
+    }
+
+    override fun showAddedToFavorites() {
+        Toast.makeText(context, "Added to favorites!", Toast.LENGTH_LONG).show()
+    }
+
+    override fun showTranslationIsInFavorites(isInFavorites: Boolean) {
+        addToFavoritesBtn.text = if (isInFavorites) "Save to favorites" else "Saved to favorites"
     }
 
     private companion object {

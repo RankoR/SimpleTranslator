@@ -1,6 +1,10 @@
 package com.g2pdev.simpletranslator.ui.mvp.translate
 
+import com.g2pdev.simpletranslator.db.FavoriteTranslation
 import com.g2pdev.simpletranslator.di.DiHolder
+import com.g2pdev.simpletranslator.interactor.favorite.AddFavoriteTranslation
+import com.g2pdev.simpletranslator.interactor.favorite.DeleteFavoriteTranslation
+import com.g2pdev.simpletranslator.interactor.favorite.TranslationIsInFavorites
 import com.g2pdev.simpletranslator.interactor.translation.Translate
 import com.g2pdev.simpletranslator.interactor.translation.cache.GetLastTextToTranslate
 import com.g2pdev.simpletranslator.interactor.translation.cache.GetTranslationLanguagePair
@@ -11,6 +15,8 @@ import com.g2pdev.simpletranslator.translation.language.LanguagePair
 import com.g2pdev.simpletranslator.translation.model.TranslationModel
 import com.g2pdev.simpletranslator.ui.mvp.base.BasePresenter
 import com.g2pdev.simpletranslator.util.schedulersIoToMain
+import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 import moxy.InjectViewState
 import timber.log.Timber
 import javax.inject.Inject
@@ -32,6 +38,15 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
 
     @Inject
     lateinit var translate: Translate
+
+    @Inject
+    lateinit var addFavoriteTranslation: AddFavoriteTranslation
+
+    @Inject
+    lateinit var deleteFavoriteTranslation: DeleteFavoriteTranslation
+
+    @Inject
+    lateinit var translationIsInFavorites: TranslationIsInFavorites
 
     init {
         DiHolder.appComponent.inject(this)
@@ -134,6 +149,7 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
                 Timber.i("Translated: $translatedText")
 
                 viewState.showTranslation(translatedText)
+                checkIfTranslationIsInFavorites(text, translatedText)
             }, { e ->
                 if (e is ModelNotDownloadedException) {
                     Timber.i("Model not downloaded yet")
@@ -145,6 +161,46 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
                     viewState.showError(e)
                 }
             })
+            .disposeOnPresenterDestroy()
+    }
+
+    fun addToFavorites(sourceText: String, targetText: String) {
+        Single.zip(
+            translationIsInFavorites.exec(sourceText, targetText),
+            getTranslationLanguagePair.exec(),
+            BiFunction<Boolean, LanguagePair, Pair<Boolean, FavoriteTranslation>> { isInFavorites, languagePair ->
+                isInFavorites to FavoriteTranslation(
+                    sourceLanguageCode = languagePair.source.name,
+                    targetLanguageCode = languagePair.target.name,
+                    sourceText = sourceText,
+                    targetText = targetText
+                )
+            }
+        ).flatMap { (isInFavorites, favoriteTranslation) ->
+            if (isInFavorites) {
+                deleteFavoriteTranslation.exec(favoriteTranslation).andThen(Single.just(false))
+            } else {
+                addFavoriteTranslation.exec(favoriteTranslation).andThen(Single.just(true))
+            }
+        }
+            .schedulersIoToMain()
+            .doOnSubscribe { viewState.enableAddToFavorites(false) }
+            .doFinally { viewState.enableAddToFavorites(true) }
+            .subscribe({
+                Timber.i("Added to favorites: $it")
+
+                viewState.showAddedToFavorites()
+            }, Timber::e)
+            .disposeOnPresenterDestroy()
+    }
+
+    private fun checkIfTranslationIsInFavorites(sourceText: String, targetText: String) {
+        translationIsInFavorites
+            .exec(sourceText, targetText)
+            .schedulersIoToMain()
+            .doOnSubscribe { viewState.enableAddToFavorites(false) }
+            .doFinally { viewState.enableAddToFavorites(true) }
+            .subscribe(viewState::showTranslationIsInFavorites, Timber::e)
             .disposeOnPresenterDestroy()
     }
 
