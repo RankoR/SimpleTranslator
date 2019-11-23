@@ -7,7 +7,9 @@ import com.g2pdev.simpletranslator.di.DiHolder
 import com.g2pdev.simpletranslator.interactor.translation.models.DownloadModel
 import com.g2pdev.simpletranslator.translation.TranslationModelSerializer
 import com.g2pdev.simpletranslator.translation.model.TranslationModel
+import io.reactivex.Scheduler
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -35,6 +37,8 @@ class DownloadModelWorker(context: Context, workerParams: WorkerParameters) : Rx
                 Single.just(Result.retry())
             }
     }
+
+    override fun getBackgroundScheduler(): Scheduler = AndroidSchedulers.mainThread()
 
     private fun getTranslationModel(): TranslationModel {
         inputData.getString(keyTranslationModel)?.let {
