@@ -68,7 +68,7 @@ class TranslationModelsAdapter : RecyclerView.Adapter<TranslationModelsAdapter.V
 
             titleTv.text = translationModelWithState.model.name
             downloadBtn.text = translationModelWithState.state.name
-            downloadBtn.isVisible = !translationModelWithState.model.isDeletable
+            downloadBtn.isVisible = translationModelWithState.model.isDeletable
         }
 
         private fun View.getTranslationModelFromTag(): TranslationModelWithState? {

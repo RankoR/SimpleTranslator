@@ -16,7 +16,7 @@ data class TranslationModel(
 ) : Comparable<TranslationModel>, Parcelable {
 
     @IgnoredOnParcel
-    val isDeletable = language == Language.EN
+    val isDeletable = language != Language.EN
 
     @IgnoredOnParcel
     val isAuto = language == Language.UNKNOWN
