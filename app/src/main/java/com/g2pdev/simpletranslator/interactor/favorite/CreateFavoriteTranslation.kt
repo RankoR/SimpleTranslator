@@ -20,8 +20,8 @@ class CreateFavoriteTranslationImpl(
             .exec()
             .map { languagePair ->
                 FavoriteTranslation(
-                    sourceLanguageCode = languagePair.source.name,
-                    targetLanguageCode = languagePair.target.name,
+                    sourceLanguageCode = languagePair.source.language.name,
+                    targetLanguageCode = languagePair.target.language.name,
                     sourceText = sourceText,
                     targetText = targetText
                 )
