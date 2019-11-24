@@ -19,6 +19,11 @@ class FavoritesTest {
     private val addFavoriteTranslation by lazy { DiHolder.appComponent.addFavoriteTranslation }
     private val deleteFavoriteTranslation by lazy { DiHolder.appComponent.deleteFavoriteTranslation }
     private val translationIsInFavorites by lazy { DiHolder.appComponent.translationIsInFavorites }
+    private val createFavoriteTranslation by lazy { DiHolder.appComponent.createFavoriteTranslation }
+    private val addOrRemoveFavoriteTranslation by lazy { DiHolder.appComponent.addOrRemoveFavoriteTranslation }
+
+    private val getTranslationLanguagePair by lazy { DiHolder.appComponent.getTranslationLanguagePair }
+    private val saveTranslationLanguagePair by lazy { DiHolder.appComponent.saveTranslationLanguagePair }
 
     @Before
     fun setUp() {
@@ -207,6 +212,59 @@ class FavoritesTest {
             .exec(favoriteTranslation)
             .test()
             .assertValue(false)
+    }
+
+    @Test
+    fun testCreateFavoriteTranslation() {
+        val currentLanguagePair = getTranslationLanguagePair.exec().blockingGet()
+
+        val expectedFavoriteTranslation = FavoriteTranslation(
+            sourceLanguageCode = currentLanguagePair.source.name,
+            targetLanguageCode = currentLanguagePair.target.name,
+            sourceText = "source",
+            targetText = "target"
+        )
+
+        createFavoriteTranslation
+            .exec("source", "target")
+            .test()
+            .assertComplete()
+            .assertValue(expectedFavoriteTranslation)
+    }
+
+    @Test
+    fun testAddOrRemoveFavoriteTranslation() {
+        clearFavorites()
+
+        val favoriteTranslation = createFavoriteTranslation.exec("source", "target").blockingGet()
+
+        // Add
+        addOrRemoveFavoriteTranslation
+            .exec(favoriteTranslation)
+            .test()
+            .assertComplete()
+            .assertValue(true)
+
+        translationIsInFavorites
+            .exec(favoriteTranslation)
+            .test()
+            .assertComplete()
+            .assertValue(true)
+
+        // Remove
+        addOrRemoveFavoriteTranslation
+            .exec(favoriteTranslation)
+            .test()
+            .assertComplete()
+            .assertValue(false)
+
+        translationIsInFavorites
+            .exec(favoriteTranslation)
+            .test()
+            .assertComplete()
+            .assertValue(false)
+
+        Assert.assertEquals(0, getCurrentFavoriteCount())
     }
 
 }

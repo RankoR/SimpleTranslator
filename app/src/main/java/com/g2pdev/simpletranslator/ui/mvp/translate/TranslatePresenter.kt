@@ -1,9 +1,8 @@
 package com.g2pdev.simpletranslator.ui.mvp.translate
 
-import com.g2pdev.simpletranslator.db.FavoriteTranslation
 import com.g2pdev.simpletranslator.di.DiHolder
-import com.g2pdev.simpletranslator.interactor.favorite.AddFavoriteTranslation
-import com.g2pdev.simpletranslator.interactor.favorite.DeleteFavoriteTranslation
+import com.g2pdev.simpletranslator.interactor.favorite.AddOrRemoveFavoriteTranslation
+import com.g2pdev.simpletranslator.interactor.favorite.CreateFavoriteTranslation
 import com.g2pdev.simpletranslator.interactor.favorite.TranslationIsInFavorites
 import com.g2pdev.simpletranslator.interactor.translation.Translate
 import com.g2pdev.simpletranslator.interactor.translation.cache.GetLastTextToTranslate
@@ -15,7 +14,6 @@ import com.g2pdev.simpletranslator.translation.language.LanguagePair
 import com.g2pdev.simpletranslator.translation.model.TranslationModel
 import com.g2pdev.simpletranslator.ui.mvp.base.BasePresenter
 import com.g2pdev.simpletranslator.util.schedulersIoToMain
-import io.reactivex.Single
 import moxy.InjectViewState
 import timber.log.Timber
 import javax.inject.Inject
@@ -39,13 +37,14 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
     lateinit var translate: Translate
 
     @Inject
-    lateinit var addFavoriteTranslation: AddFavoriteTranslation
-
-    @Inject
-    lateinit var deleteFavoriteTranslation: DeleteFavoriteTranslation
-
-    @Inject
     lateinit var translationIsInFavorites: TranslationIsInFavorites
+
+    @Inject
+    lateinit var createFavoriteTranslation: CreateFavoriteTranslation
+
+    @Inject
+    lateinit var addOrRemoveFavoriteTranslation: AddOrRemoveFavoriteTranslation
+
 
     init {
         DiHolder.appComponent.inject(this)
@@ -163,29 +162,10 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
             .disposeOnPresenterDestroy()
     }
 
-    private fun createFavoriteTranslation(sourceText: String, targetText: String): Single<FavoriteTranslation> {
-        return getTranslationLanguagePair
-            .exec()
-            .map { languagePair ->
-                FavoriteTranslation(
-                    sourceLanguageCode = languagePair.source.name,
-                    targetLanguageCode = languagePair.target.name,
-                    sourceText = sourceText,
-                    targetText = targetText
-                )
-            }
-    }
-
     fun addToFavorites(sourceText: String, targetText: String) {
-        createFavoriteTranslation(sourceText, targetText)
-            .flatMap(translationIsInFavorites::exec)
-            .flatMap { isInFavorites ->
-                if (isInFavorites) {
-                    createFavoriteTranslation(sourceText, targetText).flatMapCompletable(deleteFavoriteTranslation::exec).andThen(Single.just(false))
-                } else {
-                    createFavoriteTranslation(sourceText, targetText).flatMapCompletable(addFavoriteTranslation::exec).andThen(Single.just(true))
-                }
-            }
+        createFavoriteTranslation
+            .exec(sourceText, targetText)
+            .flatMap(addOrRemoveFavoriteTranslation::exec)
             .schedulersIoToMain()
             .doOnSubscribe { viewState.enableAddToFavorites(false) }
             .doFinally { viewState.enableAddToFavorites(true) }
@@ -198,7 +178,8 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
     }
 
     private fun checkIfTranslationIsInFavorites(sourceText: String, targetText: String) {
-        createFavoriteTranslation(sourceText, targetText)
+        createFavoriteTranslation
+            .exec(sourceText, targetText)
             .flatMap(translationIsInFavorites::exec)
             .schedulersIoToMain()
             .doOnSubscribe { viewState.enableAddToFavorites(false) }

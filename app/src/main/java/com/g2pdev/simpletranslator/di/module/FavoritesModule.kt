@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.g2pdev.simpletranslator.db.FavoriteTranslationsDao
 import com.g2pdev.simpletranslator.db.FavoriteTranslationsDatabase
 import com.g2pdev.simpletranslator.interactor.favorite.*
+import com.g2pdev.simpletranslator.interactor.translation.cache.GetTranslationLanguagePair
 import com.g2pdev.simpletranslator.repository.favorite.FavoriteTranslationsRepository
 import com.g2pdev.simpletranslator.repository.favorite.FavoriteTranslationsRepositoryImpl
 import com.g2pdev.simpletranslator.util.DbTestHelper
@@ -44,6 +45,12 @@ open class FavoritesModule {
 
     @Provides
     @Singleton
+    fun provideCreateFavoriteTranslation(
+        getTranslationLanguagePair: GetTranslationLanguagePair
+    ): CreateFavoriteTranslation = CreateFavoriteTranslationImpl(getTranslationLanguagePair)
+
+    @Provides
+    @Singleton
     fun provideGetFavoriteTranslations(
         favoriteTranslationsRepository: FavoriteTranslationsRepository
     ): GetFavoriteTranslations = GetFavoriteTranslationsImpl(favoriteTranslationsRepository)
@@ -65,6 +72,14 @@ open class FavoritesModule {
     fun provideTranslationIsInFavorites(
         favoriteTranslationsRepository: FavoriteTranslationsRepository
     ): TranslationIsInFavorites = TranslationIsInFavoritesImpl(favoriteTranslationsRepository)
+
+    @Provides
+    @Singleton
+    fun provideAddOrRemoveFavoriteTranslation(
+        translationIsInFavorites: TranslationIsInFavorites,
+        addFavoriteTranslation: AddFavoriteTranslation,
+        deleteFavoriteTranslation: DeleteFavoriteTranslation
+    ): AddOrRemoveFavoriteTranslation = AddOrRemoveFavoriteTranslationImpl(translationIsInFavorites, addFavoriteTranslation, deleteFavoriteTranslation)
 
     @Provides
     @Singleton
