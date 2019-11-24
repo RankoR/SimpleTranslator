@@ -9,13 +9,24 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.db.FavoriteTranslation
+import com.g2pdev.simpletranslator.di.DiHolder
+import com.g2pdev.simpletranslator.translation.language.Language
+import com.g2pdev.simpletranslator.translation.language.LanguageNameProvider
+import javax.inject.Inject
 
 class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
+
+    @Inject
+    lateinit var languageNameProvider: LanguageNameProvider
 
     private var favorites = emptyList<FavoriteTranslation>()
 
     var onCopyClickListener: ((favoriteTranslation: FavoriteTranslation) -> Unit)? = null
     var onShareClickListener: ((favoriteTranslation: FavoriteTranslation) -> Unit)? = null
+
+    init {
+        DiHolder.appComponent.inject(this)
+    }
 
     fun setFavorites(favorites: List<FavoriteTranslation>) {
         val diffUtilCallback = FavoritesDiffUtilCallback(this.favorites, favorites)
@@ -52,13 +63,13 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
         private val shareBtn: Button = itemView.findViewById(R.id.shareBtn)
 
         init {
-            copyBtn.setOnClickListener { view ->
-                view.getFavoriteTranslationFromTag()?.let {
+            copyBtn.setOnClickListener {
+                itemView.getFavoriteTranslationFromTag()?.let {
                     onCopyClickListener?.invoke(it)
                 }
             }
-            shareBtn.setOnClickListener { view ->
-                view.getFavoriteTranslationFromTag()?.let {
+            shareBtn.setOnClickListener {
+                itemView.getFavoriteTranslationFromTag()?.let {
                     onShareClickListener?.invoke(it)
                 }
             }
@@ -67,13 +78,21 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
         fun bind(favoriteTranslation: FavoriteTranslation) {
             itemView.tag = favoriteTranslation
 
-            // TODO
+            sourceLanguageTv.text = getLanguageNameForCode(favoriteTranslation.sourceLanguageCode)
+            targetLanguageTv.text = getLanguageNameForCode(favoriteTranslation.targetLanguageCode)
+
             sourceTextTv.text = favoriteTranslation.sourceText
             targetTextTv.text = favoriteTranslation.targetText
         }
 
         private fun View.getFavoriteTranslationFromTag(): FavoriteTranslation? {
             return tag as? FavoriteTranslation
+        }
+
+        private fun getLanguageNameForCode(languageCode: String): String {
+            val language = Language.valueOf(languageCode)
+
+            return languageNameProvider.getNameForLanguage(language)
         }
     }
 

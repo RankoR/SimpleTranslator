@@ -5,6 +5,7 @@ import com.g2pdev.simpletranslator.di.module.*
 import com.g2pdev.simpletranslator.interactor.favorite.*
 import com.g2pdev.simpletranslator.interactor.translation.cache.GetTranslationLanguagePair
 import com.g2pdev.simpletranslator.interactor.translation.cache.SaveTranslationLanguagePair
+import com.g2pdev.simpletranslator.ui.mvp.favorite.FavoritesAdapter
 import com.g2pdev.simpletranslator.ui.mvp.favorite.FavoritesPresenter
 import com.g2pdev.simpletranslator.ui.mvp.language.TranslationModelsPresenter
 import com.g2pdev.simpletranslator.ui.mvp.translate.TranslatePresenter
@@ -44,5 +45,6 @@ interface AppComponent {
     fun inject(translatePresenter: TranslatePresenter)
     fun inject(translationModelsPresenter: TranslationModelsPresenter)
     fun inject(favoritesPresenter: FavoritesPresenter)
+    fun inject(favoritesAdapter: FavoritesAdapter)
 
 }
