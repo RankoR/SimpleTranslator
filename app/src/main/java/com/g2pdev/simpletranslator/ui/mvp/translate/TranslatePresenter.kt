@@ -200,4 +200,8 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
             .disposeOnPresenterDestroy()
     }
 
+    fun share(text: String) {
+        viewState.shareText(text)
+    }
+
 }

@@ -46,4 +46,7 @@ interface TranslateView : MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun showCopiedToClipboard()
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun shareText(text: String)
 }

@@ -1,5 +1,6 @@
 package com.g2pdev.simpletranslator.ui.mvp.translate
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -67,9 +68,15 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
         }
 
         copyBtn.setOnClickListener {
-            presenter.copyToClipboard(targetTv.text.trim().toString())
+            presenter.copyToClipboard(getTargetText())
+        }
+
+        shareBtn.setOnClickListener {
+            presenter.share(getTargetText())
         }
     }
+
+    private fun getTargetText(): String = targetTv.text.trim().toString()
 
     override fun setTextToTranslate(text: String) {
         Timber.i("Text to translate: $text")
@@ -144,6 +151,17 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
 
     override fun showCopiedToClipboard() {
         Toast.makeText(context, "Copied to clipboard!", Toast.LENGTH_LONG).show()
+    }
+
+    override fun shareText(text: String) {
+        Intent(Intent.ACTION_SEND)
+            .apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, text)
+            }
+            .also {
+                startActivity(it)
+            }
     }
 
     private companion object {
