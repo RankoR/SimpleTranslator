@@ -33,6 +33,7 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
             .textChanges()
             .debounce(inputDebounceTime, TimeUnit.MILLISECONDS)
             .map { it.toString() }
+            .map { it.trim() }
             .filter { it.length >= minTextLength }
             .schedulersIoToMain()
             .subscribe({ text ->
