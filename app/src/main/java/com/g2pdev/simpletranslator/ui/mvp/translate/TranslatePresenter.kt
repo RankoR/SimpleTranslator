@@ -4,6 +4,7 @@ import com.g2pdev.simpletranslator.di.DiHolder
 import com.g2pdev.simpletranslator.interactor.favorite.AddOrRemoveFavoriteTranslation
 import com.g2pdev.simpletranslator.interactor.favorite.CreateFavoriteTranslation
 import com.g2pdev.simpletranslator.interactor.favorite.TranslationIsInFavorites
+import com.g2pdev.simpletranslator.interactor.misc.CopyTextToClipboard
 import com.g2pdev.simpletranslator.interactor.translation.Translate
 import com.g2pdev.simpletranslator.interactor.translation.cache.GetLastTextToTranslate
 import com.g2pdev.simpletranslator.interactor.translation.cache.GetTranslationLanguagePair
@@ -44,6 +45,9 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
 
     @Inject
     lateinit var addOrRemoveFavoriteTranslation: AddOrRemoveFavoriteTranslation
+
+    @Inject
+    lateinit var copyTextToClipboard: CopyTextToClipboard
 
 
     init {
@@ -185,6 +189,14 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
             .doOnSubscribe { viewState.enableAddToFavorites(false) }
             .doFinally { viewState.enableAddToFavorites(true) }
             .subscribe(viewState::showTranslationIsInFavorites, Timber::e)
+            .disposeOnPresenterDestroy()
+    }
+
+    fun copyToClipboard(text: String) {
+        copyTextToClipboard
+            .exec(text)
+            .schedulersIoToMain()
+            .subscribe(viewState::showCopiedToClipboard, Timber::e)
             .disposeOnPresenterDestroy()
     }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.translation.language.LanguagePair
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
@@ -63,6 +64,10 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
                 sourceText = sourceTv.text.toString(),
                 targetText = targetTv.text.toString()
             )
+        }
+
+        copyBtn.setOnClickListener {
+            presenter.copyToClipboard(targetTv.text.trim().toString())
         }
     }
 
@@ -134,7 +139,11 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
     }
 
     override fun showTranslationIsInFavorites(isInFavorites: Boolean) {
-        addToFavoritesBtn.text = if (isInFavorites) "Remove from favorites" else "Save to favorites"
+        addToFavoritesBtn.text = if (isInFavorites) "Fav -" else "Fav +"
+    }
+
+    override fun showCopiedToClipboard() {
+        Toast.makeText(context, "Copied to clipboard!", Toast.LENGTH_LONG).show()
     }
 
     private companion object {

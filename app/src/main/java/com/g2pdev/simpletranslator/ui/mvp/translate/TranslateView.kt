@@ -43,4 +43,7 @@ interface TranslateView : MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showTranslationIsInFavorites(isInFavorites: Boolean)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showCopiedToClipboard()
 }
