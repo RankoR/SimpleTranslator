@@ -41,9 +41,6 @@ interface TranslateView : MvpView {
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun showModelRequired(languagePair: LanguagePair)
 
-    @StateStrategyType(OneExecutionStateStrategy::class)
-    fun showAddedToFavorites()
-
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showTranslationIsInFavorites(isInFavorites: Boolean)
 }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.translation.language.LanguagePair
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
@@ -133,12 +132,8 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
         addToFavoritesBtn.isEnabled = enable
     }
 
-    override fun showAddedToFavorites() {
-        Toast.makeText(context, "Added to favorites!", Toast.LENGTH_LONG).show()
-    }
-
     override fun showTranslationIsInFavorites(isInFavorites: Boolean) {
-        addToFavoritesBtn.text = if (isInFavorites) "Save to favorites" else "Saved to favorites"
+        addToFavoritesBtn.text = if (isInFavorites) "Remove from favorites" else "Save to favorites"
     }
 
     private companion object {

@@ -172,7 +172,7 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
             .subscribe({
                 Timber.i("Added to favorites: $it")
 
-                viewState.showAddedToFavorites()
+                viewState.showTranslationIsInFavorites(it)
             }, Timber::e)
             .disposeOnPresenterDestroy()
     }
