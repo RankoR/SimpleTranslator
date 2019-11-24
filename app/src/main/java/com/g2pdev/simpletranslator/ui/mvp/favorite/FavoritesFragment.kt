@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
@@ -46,6 +47,14 @@ class FavoritesFragment : BaseMvpFragment(), FavoritesView {
 
     override fun showFavorites(favorites: List<FavoriteTranslation>) {
         adapter.setFavorites(favorites)
+
+        if (favorites.isEmpty()) {
+            favoritesRv.isVisible = false
+            emptyTv.isVisible = true
+        } else {
+            emptyTv.isVisible = false
+            favoritesRv.isVisible = true
+        }
     }
 
     override fun showCopiedToClipboard() {
