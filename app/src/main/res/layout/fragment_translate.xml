@@ -117,4 +117,12 @@
         android:text="Download models"
         app:layout_constraintTop_toBottomOf="@id/targetLayout" />
 
+    <Button
+        android:id="@+id/favoritesBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Favorites"
+        app:layout_constraintTop_toBottomOf="@id/downloadModelsBtn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,4 +9,7 @@
     <!-- Model selection dialog -->
     <string name="error_model_not_downloaded_selection_error">Please download model before selecting it</string>
     <string name="hint_model_search">Search for language…</string>
+
+    <!-- Favorites -->
+    <string name="title_empty_favorites">Nothing here yet.\nAdd something to favorites!</string>
 </resources>

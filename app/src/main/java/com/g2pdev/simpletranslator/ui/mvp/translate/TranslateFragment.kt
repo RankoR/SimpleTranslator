@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.translation.language.LanguagePair
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
@@ -46,6 +47,10 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
         downloadModelsBtn.setOnClickListener {
             val translationModelsFragment = TranslationModelsFragment.newInstance(TranslationModelsPresenter.ScreenType.DOWNLOADER)
             translationModelsFragment.show(fragmentManager)
+        }
+
+        favoritesBtn.setOnClickListener {
+            findNavController().navigate(TranslateFragmentDirections.translateFragmentToFavoritesFragment())
         }
 
         sourceLanguageTv.setOnClickListener {

@@ -6,4 +6,6 @@
 
     <color name="colorWhite">#ffffff</color>
     <color name="colorTransparent">#00000000</color>
+
+    <color name="colorDivider">#55000000</color>
 </resources>
