@@ -23,7 +23,6 @@ class FavoritesTest {
     private val addOrRemoveFavoriteTranslation by lazy { DiHolder.appComponent.addOrRemoveFavoriteTranslation }
 
     private val getTranslationLanguagePair by lazy { DiHolder.appComponent.getTranslationLanguagePair }
-    private val saveTranslationLanguagePair by lazy { DiHolder.appComponent.saveTranslationLanguagePair }
 
     @Before
     fun setUp() {
