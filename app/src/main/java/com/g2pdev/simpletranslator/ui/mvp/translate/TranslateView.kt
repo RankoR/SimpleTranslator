@@ -49,4 +49,10 @@ interface TranslateView : MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun shareText(text: String)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun enableTts(enable: Boolean)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showTtsSpeaking(show: Boolean)
 }

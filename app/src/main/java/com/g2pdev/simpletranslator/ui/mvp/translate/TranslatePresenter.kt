@@ -10,6 +10,8 @@ import com.g2pdev.simpletranslator.interactor.translation.cache.GetLastTextToTra
 import com.g2pdev.simpletranslator.interactor.translation.cache.GetTranslationLanguagePair
 import com.g2pdev.simpletranslator.interactor.translation.cache.SaveLastTextToTranslate
 import com.g2pdev.simpletranslator.interactor.translation.cache.SaveTranslationLanguagePair
+import com.g2pdev.simpletranslator.interactor.tts.CheckIfTtsLanguageAvailable
+import com.g2pdev.simpletranslator.repository.tts.SpeakText
 import com.g2pdev.simpletranslator.translation.exception.ModelNotDownloadedException
 import com.g2pdev.simpletranslator.translation.language.LanguagePair
 import com.g2pdev.simpletranslator.translation.model.TranslationModel
@@ -49,6 +51,11 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
     @Inject
     lateinit var copyTextToClipboard: CopyTextToClipboard
 
+    @Inject
+    lateinit var checkIfTtsLanguageAvailable: CheckIfTtsLanguageAvailable
+
+    @Inject
+    lateinit var speakText: SpeakText
 
     init {
         DiHolder.appComponent.inject(this)
@@ -58,6 +65,7 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
         super.attachView(view)
 
         loadTranslationLanguagesAndReTranslate()
+        checkIfTtsAvailable()
     }
 
     fun loadTranslationLanguagesAndReTranslate() {
@@ -109,7 +117,10 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
                 viewState.disableInputs(false)
                 viewState.disableLanguageChange(false)
             }
-            .subscribe(::loadTranslationLanguagesAndReTranslate, Timber::e)
+            .subscribe({
+                checkIfTtsAvailable()
+                loadTranslationLanguagesAndReTranslate()
+            }, Timber::e)
             .disposeOnPresenterDestroy()
     }
 
@@ -131,7 +142,10 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
                 saveTranslationLanguagePair
                     .exec(it.copyWithReplacedTargetLanguage(targetLanguage))
             }
-            .subscribe(::loadTranslationLanguagesAndReTranslate, Timber::e)
+            .subscribe({
+                checkIfTtsAvailable()
+                loadTranslationLanguagesAndReTranslate()
+            }, Timber::e)
             .disposeOnPresenterDestroy()
     }
 
@@ -202,6 +216,37 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
 
     fun share(text: String) {
         viewState.shareText(text)
+    }
+
+    private fun checkIfTtsAvailable() {
+        getTranslationLanguagePair
+            .exec()
+            .map { it.target.language }
+            .flatMapCompletable(checkIfTtsLanguageAvailable::exec)
+            .schedulersIoToMain()
+            .doOnSubscribe { viewState.enableTts(false) }
+            .doOnError { viewState.enableTts(false) }
+            .doOnComplete { viewState.enableTts(true) }
+            .subscribe({}, Timber::w)
+            .disposeOnPresenterDestroy()
+    }
+
+    fun speakText(text: String) {
+        getTranslationLanguagePair
+            .exec()
+            .map { it.target.language }
+            .flatMapCompletable { speakText.exec(it, text) }
+            .schedulersIoToMain()
+            .doOnSubscribe {
+                viewState.enableTts(false)
+                viewState.showTtsSpeaking(true)
+            }
+            .doFinally {
+                viewState.enableTts(true)
+                viewState.showTtsSpeaking(false)
+            }
+            .subscribe({}, Timber::w)
+            .disposeOnPresenterDestroy()
     }
 
 }

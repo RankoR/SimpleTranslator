@@ -1,10 +1,7 @@
 package com.g2pdev.simpletranslator.di.component
 
 import com.g2pdev.simpletranslator.App
-import com.g2pdev.simpletranslator.di.module.AppModule
-import com.g2pdev.simpletranslator.di.module.FavoritesModule
-import com.g2pdev.simpletranslator.di.module.FirebaseModule
-import com.g2pdev.simpletranslator.di.module.TranslationModule
+import com.g2pdev.simpletranslator.di.module.*
 import com.g2pdev.simpletranslator.interactor.favorite.*
 import com.g2pdev.simpletranslator.interactor.translation.cache.GetTranslationLanguagePair
 import com.g2pdev.simpletranslator.interactor.translation.cache.SaveTranslationLanguagePair
@@ -20,7 +17,8 @@ import javax.inject.Singleton
         AppModule::class,
         FirebaseModule::class,
         TranslationModule::class,
-        FavoritesModule::class
+        FavoritesModule::class,
+        TtsModule::class
     ]
 )
 @Singleton

@@ -1,5 +1,7 @@
 package com.g2pdev.simpletranslator.translation.language
 
+import java.util.*
+
 enum class Language {
     AF,
     AR,
@@ -63,5 +65,7 @@ enum class Language {
     UNKNOWN;
 
     fun isUnknown() = this == UNKNOWN
+
+    fun toLocale() = Locale.Builder().setLanguage(name.toLowerCase(Locale.ROOT)).build()
 }
 

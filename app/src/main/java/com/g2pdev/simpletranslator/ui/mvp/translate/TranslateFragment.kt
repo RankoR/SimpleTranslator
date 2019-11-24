@@ -74,6 +74,10 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
         shareBtn.setOnClickListener {
             presenter.share(getTargetText())
         }
+
+        ttsBtn.setOnClickListener {
+            presenter.speakText(getTargetText())
+        }
     }
 
     private fun getTargetText(): String = targetTv.text.trim().toString()
@@ -162,6 +166,14 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
             .also {
                 startActivity(it)
             }
+    }
+
+    override fun enableTts(enable: Boolean) {
+        ttsBtn.isEnabled = enable
+    }
+
+    override fun showTtsSpeaking(show: Boolean) {
+        Toast.makeText(context, "TTS Speaking: $show", Toast.LENGTH_LONG).show()
     }
 
     private companion object {
