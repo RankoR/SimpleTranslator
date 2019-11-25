@@ -9,6 +9,7 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <item name="dialogTheme">@style/AppBottomSheetDialogTheme</item>
         <item name="android:lineSpacingExtra">6sp</item>
+        <item name="fontFamily">@font/montserrat</item>
     </style>
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
@@ -23,6 +24,5 @@
         <item name="android:windowEnterAnimation">@anim/bs_slide_in</item>
         <item name="android:windowExitAnimation">@anim/bs_slide_out</item>
     </style>
-
 
 </resources>

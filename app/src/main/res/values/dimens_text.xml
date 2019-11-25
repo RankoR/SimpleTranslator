@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textSizePageTitle">20sp</dimen>
+    <dimen name="textSizeParagraph">14sp</dimen>
+    <dimen name="textSizeListTitle">14sp</dimen>
+    <dimen name="textSizeListItemTitle">16sp</dimen>
+    <dimen name="textSizeCaption">14sp</dimen>
+    <dimen name="textSizeButton">14sp</dimen>
+    <dimen name="textSizeTextInput">16sp</dimen>
+
+    <dimen name="textSizeBackdropText">14sp</dimen>
+</resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base styles -->
+
+    <style name="MontserratThin">
+        <item name="android:fontFamily">@font/montserrat_thin</item>
+    </style>
+
+    <style name="MontserratThin.Italic">
+        <item name="android:fontFamily">@font/montserrat_thin_italic</item>
+    </style>
+
+    <style name="MontserratExtraLight">
+        <item name="android:fontFamily">@font/montserrat_extra_light</item>
+    </style>
+
+    <style name="MontserratExtraLight.Italic">
+        <item name="android:fontFamily">@font/montserrat_extra_light_italic</item>
+    </style>
+
+    <style name="MontserratLight">
+        <item name="android:fontFamily">@font/montserrat_light</item>
+    </style>
+
+    <style name="MontserratLight.Italic">
+        <item name="android:fontFamily">@font/montserrat_light_italic</item>
+    </style>
+
+    <style name="MontserratRegular">
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+    </style>
+
+    <style name="MontserratRegular.Italic">
+        <item name="android:fontFamily">@font/montserrat_italic</item>
+    </style>
+
+    <style name="MontserratMedium">
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+    </style>
+
+    <style name="MontserratMedium.Italic">
+        <item name="android:fontFamily">@font/montserrat_medium_italic</item>
+    </style>
+
+    <style name="MontserratSemiBold">
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+    </style>
+
+    <style name="MontserratSemiBold.Italic">
+        <item name="android:fontFamily">@font/montserrat_semi_bold_italic</item>
+    </style>
+
+    <style name="MontserratBold">
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
+
+    <style name="MontserratBold.Italic">
+        <item name="android:fontFamily">@font/montserrat_bold_italic</item>
+    </style>
+
+    <style name="MontserratExtraBold">
+        <item name="android:fontFamily">@font/montserrat_extra_bold</item>
+    </style>
+
+    <style name="MontserratExtraBold.Italic">
+        <item name="android:fontFamily">@font/montserrat_extra_bold_italic</item>
+    </style>
+
+    <style name="MontserratBlack">
+        <item name="android:fontFamily">@font/montserrat_black</item>
+    </style>
+
+    <style name="MontserratBlack.Italic">
+        <item name="android:fontFamily">@font/montserrat_black_italic</item>
+    </style>
+
+    <!-- Views styles -->
+
+    <style name="BackdropTextBack" parent="MontserratRegular">
+        <item name="android:textColor">@color/colorTextBackdropBack</item>
+        <item name="android:textSize">@dimen/textSizeBackdropText</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+</resources>
