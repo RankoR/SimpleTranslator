@@ -95,13 +95,10 @@ class TranslateFragment : BaseMvpFragment(
     private fun getTargetText(): String = targetTv.text.trim().toString()
 
     override fun setTextToTranslate(text: String) {
-        Timber.i("Text to translate: $text")
-
         sourceTv.setText(text)
     }
 
     override fun showLoading(loading: Boolean) {
-        Timber.i("Loading: $loading")
     }
 
     override fun showTranslation(text: String) {
