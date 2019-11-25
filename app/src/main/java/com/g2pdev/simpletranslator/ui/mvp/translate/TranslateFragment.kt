@@ -23,7 +23,10 @@ import moxy.presenter.InjectPresenter
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class TranslateFragment : BaseMvpFragment(), TranslateView {
+class TranslateFragment : BaseMvpFragment(
+    lightStatusBar = false,
+    lightNavigationBar = true
+), TranslateView {
 
     @InjectPresenter
     lateinit var presenter: TranslatePresenter
@@ -179,7 +182,7 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
     }
 
     override fun showTtsSpeaking(show: Boolean) {
-        Toast.makeText(context, "TTS Speaking: $show", Toast.LENGTH_LONG).show()
+        // TODO in future
     }
 
     override fun clearSourceText() {
