@@ -75,12 +75,55 @@
         <item name="android:fontFamily">@font/montserrat_black_italic</item>
     </style>
 
+    <style name="Headline1" parent="MontserratLight">
+        <item name="android:textSize">@dimen/textSizeHeadline1</item>
+    </style>
+
+    <style name="Headline2" parent="MontserratLight">
+        <item name="android:textSize">@dimen/textSizeHeadline2</item>
+    </style>
+
+    <style name="Headline3" parent="MontserratRegular">
+        <item name="android:textSize">@dimen/textSizeHeadline3</item>
+    </style>
+
+    <style name="Headline4" parent="MontserratRegular">
+        <item name="android:textSize">@dimen/textSizeHeadline4</item>
+    </style>
+
+    <style name="Headline5" parent="MontserratRegular">
+        <item name="android:textSize">@dimen/textSizeHeadline5</item>
+    </style>
+
+    <style name="Headline6" parent="MontserratRegular">
+        <item name="android:textSize">@dimen/textSizeHeadline6</item>
+    </style>
+
+    <style name="Subtitle1" parent="MontserratRegular">
+        <item name="android:textSize">@dimen/textSizeSubtitle1</item>
+    </style>
+
+    <style name="Subtitle2" parent="MontserratMedium">
+        <item name="android:textSize">@dimen/textSizeSubtitle2</item>
+    </style>
+
+    <style name="Body1" parent="MontserratRegular">
+        <item name="android:textSize">@dimen/textSizeBody1</item>
+    </style>
+
+    <style name="Body2" parent="MontserratRegular">
+        <item name="android:textSize">@dimen/textSizeBody2</item>
+    </style>
+
+    <style name="Caption" parent="MontserratRegular">
+        <item name="android:textSize">@dimen/textSizeCaption</item>
+    </style>
+
     <!-- Views styles -->
 
-    <style name="BackdropTextBack" parent="MontserratRegular">
-        <item name="android:textColor">@color/colorTextBackdropBack</item>
-        <item name="android:textSize">@dimen/textSizeBackdropText</item>
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    <style name="LanguageButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/textSizeButton</item>
     </style>
 
 </resources>

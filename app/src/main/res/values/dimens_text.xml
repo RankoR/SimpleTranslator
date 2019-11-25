@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="textSizePageTitle">20sp</dimen>
-    <dimen name="textSizeParagraph">14sp</dimen>
-    <dimen name="textSizeListTitle">14sp</dimen>
-    <dimen name="textSizeListItemTitle">16sp</dimen>
-    <dimen name="textSizeCaption">14sp</dimen>
+    <dimen name="textSizeHeadline1">96sp</dimen>
+    <dimen name="textSizeHeadline2">60sp</dimen>
+    <dimen name="textSizeHeadline3">48sp</dimen>
+    <dimen name="textSizeHeadline4">34sp</dimen>
+    <dimen name="textSizeHeadline5">24sp</dimen>
+    <dimen name="textSizeHeadline6">20sp</dimen>
+    <dimen name="textSizeSubtitle1">16sp</dimen>
+    <dimen name="textSizeSubtitle2">14sp</dimen>
+    <dimen name="textSizeBody1">16sp</dimen>
+    <dimen name="textSizeBody2">14sp</dimen>
+    <dimen name="textSizeCaption">12sp</dimen>
     <dimen name="textSizeButton">14sp</dimen>
-    <dimen name="textSizeTextInput">16sp</dimen>
-
-    <dimen name="textSizeBackdropText">14sp</dimen>
+    <dimen name="textSizeOverline">12sp</dimen>
 </resources>
