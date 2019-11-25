@@ -150,6 +150,13 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
     }
 
     fun translate(text: String) {
+        if (text.isBlank()) {
+            viewState.showTranslation("")
+            viewState.showTargetActions(false)
+
+            return
+        }
+
         saveLastTextToTranslate
             .exec(text)
             .andThen(getTranslationLanguagePair.exec())
@@ -165,6 +172,8 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
                 Timber.i("Translated: $translatedText")
 
                 viewState.showTranslation(translatedText)
+                viewState.showTargetActions(translatedText.isNotBlank())
+
                 checkIfTranslationIsInFavorites(text, translatedText)
             }, { e ->
                 if (e is ModelNotDownloadedException) {

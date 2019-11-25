@@ -43,17 +43,11 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
             .observeOn(Schedulers.io())
             .debounce(inputDebounceTime, TimeUnit.MILLISECONDS)
             .map { it.trim() }
-            .filter { it.length >= minTextLength }
             .schedulersIoToMain()
             .subscribe({ text ->
                 presenter.translate(text)
             }, Timber::e)
             .disposeOnDestroy()
-
-        downloadModelsBtn.setOnClickListener {
-            val translationModelsFragment = TranslationModelsFragment.newInstance(TranslationModelsPresenter.ScreenType.DOWNLOADER)
-            translationModelsFragment.show(fragmentManager)
-        }
 
         favoritesBtn.setOnClickListener {
             findNavController().navigate(TranslateFragmentDirections.translateFragmentToFavoritesFragment())
@@ -108,8 +102,6 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
     }
 
     override fun showTranslation(text: String) {
-        Timber.i("Translation: $text")
-
         targetTv.text = text
     }
 
@@ -128,8 +120,6 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
     }
 
     override fun showLanguagePair(languagePair: LanguagePair) {
-        Timber.i("Show language pair: $languagePair")
-
         sourceLanguageTv.text = languagePair.source.name
         targetLanguageTv.text = languagePair.target.name
     }
@@ -165,7 +155,8 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
     }
 
     override fun showTranslationIsInFavorites(isInFavorites: Boolean) {
-        addToFavoritesBtn.text = if (isInFavorites) "Fav -" else "Fav +"
+        val imageResId = if (isInFavorites) R.drawable.ic_bookmark_filled else R.drawable.ic_bookmark_not_filled
+        addToFavoritesBtn.setImageResource(imageResId)
     }
 
     override fun showCopiedToClipboard() {
@@ -184,7 +175,6 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
     }
 
     override fun enableTts(enable: Boolean) {
-        // TODO: Change icon if disabled
         ttsBtn.isEnabled = enable
     }
 
@@ -194,6 +184,10 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
 
     override fun clearSourceText() {
         sourceTv.setText("")
+    }
+
+    override fun showTargetActions(show: Boolean) {
+        actionsLayout.isVisible = show
     }
 
     private companion object {

@@ -58,4 +58,7 @@ interface TranslateView : MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun clearSourceText()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showTargetActions(show: Boolean)
 }

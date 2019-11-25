@@ -2,6 +2,9 @@
     <string name="app_name">Simple Translator</string>
     <string name="app_title">Simple Translator</string>
 
+    <!-- Translate -->
+    <string name="hint_text_to_translate">Text to translate</string>
+
     <!-- Model required dialog -->
     <string name="message_model_dialog_required">Languages %1$s and %2$s are required to be downloaded to translate text</string>
     <string name="title_model_dialog_required_btn">Download</string>
