@@ -33,7 +33,7 @@ abstract class BaseMvpFragment(
 
         ViewCompat.requestApplyInsets(view)
         view.dispatchApplyWindowInsetsToChild()
-        applyStyle()
+        //applyStyle()
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
             onApplyWindowsInsets(insets.systemWindowInsetTop)
             insets

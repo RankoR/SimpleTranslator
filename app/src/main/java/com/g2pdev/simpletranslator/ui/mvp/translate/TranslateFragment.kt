@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit
 
 class TranslateFragment : BaseMvpFragment(
     lightStatusBar = false,
-    lightNavigationBar = true
+    lightNavigationBar = false
 ), TranslateView {
 
     @InjectPresenter

@@ -19,7 +19,6 @@ abstract class BaseMvpBottomSheetFragment : DialogFragment() {
     private val compositeDisposable by lazy { CompositeDisposable() }
     private val mvpDelegate: MvpDelegate<out BaseMvpBottomSheetFragment> by lazy { MvpDelegate(this) }
 
-
     abstract fun getFragmentTag(): String
 
     override fun getTheme(): Int = R.style.AppBottomSheetDialogTheme
