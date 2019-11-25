@@ -4,4 +4,4 @@ This is an app to demonstrate Firebase MLKit Translation implementation for Andr
 
 # Icons
 
-Icons made by bqlqn, Dave Gandy from https://www.flaticon.com/
+Icons made by bqlqn, Dave Gandy, Gregor Cresnar from https://www.flaticon.com/

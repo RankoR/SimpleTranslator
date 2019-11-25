@@ -126,4 +126,8 @@
         <item name="android:textSize">@dimen/textSizeButton</item>
     </style>
 
+    <style name="AppTitleStyle" parent="Headline6">
+        <item name="android:textColor">@color/colorTextBackdropBack</item>
+    </style>
+
 </resources>
