@@ -55,4 +55,7 @@ interface TranslateView : MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showTtsSpeaking(show: Boolean)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun clearSourceText()
 }

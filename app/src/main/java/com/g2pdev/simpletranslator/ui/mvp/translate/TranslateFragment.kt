@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.translation.language.LanguagePair
@@ -15,6 +16,8 @@ import com.g2pdev.simpletranslator.ui.mvp.language.TranslationModelsPresenter
 import com.g2pdev.simpletranslator.ui.mvp.language.download.ModelDownloadRequiredFragment
 import com.g2pdev.simpletranslator.util.schedulersIoToMain
 import com.jakewharton.rxbinding3.widget.textChanges
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_translate.*
 import moxy.presenter.InjectPresenter
 import timber.log.Timber
@@ -34,8 +37,11 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
 
         sourceTv
             .textChanges()
-            .debounce(inputDebounceTime, TimeUnit.MILLISECONDS)
             .map { it.toString() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { clearSourceTextBtn.isVisible = it.isNotEmpty() }
+            .observeOn(Schedulers.io())
+            .debounce(inputDebounceTime, TimeUnit.MILLISECONDS)
             .map { it.trim() }
             .filter { it.length >= minTextLength }
             .schedulersIoToMain()
@@ -51,6 +57,10 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
 
         favoritesBtn.setOnClickListener {
             findNavController().navigate(TranslateFragmentDirections.translateFragmentToFavoritesFragment())
+        }
+
+        clearSourceTextBtn.setOnClickListener {
+            presenter.clearSourceText()
         }
 
         sourceLanguageTv.setOnClickListener {
@@ -112,9 +122,9 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
     }
 
     override fun disableLanguageChange(disable: Boolean) {
-        sourceLanguageTv.isEnabled = !disable
-        targetLanguageTv.isEnabled = !disable
-        swapLanguagesBtn.isEnabled = !disable
+        sourceLanguageTv.isClickable = !disable
+        targetLanguageTv.isClickable = !disable
+        swapLanguagesBtn.isClickable = !disable
     }
 
     override fun showLanguagePair(languagePair: LanguagePair) {
@@ -151,7 +161,7 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
     }
 
     override fun enableAddToFavorites(enable: Boolean) {
-        addToFavoritesBtn.isEnabled = enable
+        addToFavoritesBtn.isClickable = enable
     }
 
     override fun showTranslationIsInFavorites(isInFavorites: Boolean) {
@@ -174,11 +184,16 @@ class TranslateFragment : BaseMvpFragment(), TranslateView {
     }
 
     override fun enableTts(enable: Boolean) {
+        // TODO: Change icon if disabled
         ttsBtn.isEnabled = enable
     }
 
     override fun showTtsSpeaking(show: Boolean) {
         Toast.makeText(context, "TTS Speaking: $show", Toast.LENGTH_LONG).show()
+    }
+
+    override fun clearSourceText() {
+        sourceTv.setText("")
     }
 
     private companion object {

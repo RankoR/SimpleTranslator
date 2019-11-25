@@ -249,4 +249,8 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
             .disposeOnPresenterDestroy()
     }
 
+    fun clearSourceText() {
+        viewState.clearSourceText()
+    }
+
 }
