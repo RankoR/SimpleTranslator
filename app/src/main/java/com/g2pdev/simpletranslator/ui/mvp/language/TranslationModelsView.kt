@@ -14,9 +14,6 @@ interface TranslationModelsView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showError(t: Throwable)
 
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showClearSearchButton(show: Boolean)
-
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun notifyModelSelected(translationModelWithState: TranslationModelWithState)
 

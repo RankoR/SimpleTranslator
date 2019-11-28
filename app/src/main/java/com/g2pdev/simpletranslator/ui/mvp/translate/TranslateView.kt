@@ -20,10 +20,10 @@ interface TranslateView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showLanguagePair(languagePair: LanguagePair)
 
-    @StateStrategyType(AddToEndSingleStrategy::class)
+    @StateStrategyType(OneExecutionStateStrategy::class)
     fun showSourceLanguageChooser()
 
-    @StateStrategyType(AddToEndSingleStrategy::class)
+    @StateStrategyType(OneExecutionStateStrategy::class)
     fun showTargetLanguageChooser()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
