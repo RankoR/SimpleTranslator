@@ -1,3 +1,4 @@
 rootProject.name='Simple Translator'
 include ':app'
 include ':translation'
+include ':base'

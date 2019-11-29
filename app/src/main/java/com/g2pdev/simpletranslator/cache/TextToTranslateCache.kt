@@ -1,6 +1,7 @@
 package com.g2pdev.simpletranslator.cache
 
 import android.content.Context
+import com.g2pdev.translator.base.BaseCache
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.Single
