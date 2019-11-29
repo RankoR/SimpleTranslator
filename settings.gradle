@@ -1,4 +1,4 @@
 rootProject.name='Simple Translator'
 include ':app'
-include ':translation'
-include ':base'
+include ':base_modules:base'
+include ':base_modules:translation'

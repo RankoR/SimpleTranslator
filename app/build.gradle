@@ -48,8 +48,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(':base')
-    implementation project(':translation')
+    implementation project(':base_modules:base')
+    implementation project(':base_modules:translation')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
