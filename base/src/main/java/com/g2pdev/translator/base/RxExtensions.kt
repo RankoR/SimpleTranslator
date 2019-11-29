@@ -1,4 +1,4 @@
-package com.g2pdev.simpletranslator.util
+package com.g2pdev.translator.base
 
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers

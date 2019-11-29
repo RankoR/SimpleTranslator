@@ -6,7 +6,7 @@ import com.g2pdev.simpletranslator.interactor.favorite.DeleteFavoriteTranslation
 import com.g2pdev.simpletranslator.interactor.favorite.GetFavoriteTranslations
 import com.g2pdev.simpletranslator.interactor.misc.CopyTextToClipboard
 import com.g2pdev.simpletranslator.ui.mvp.base.BasePresenter
-import com.g2pdev.simpletranslator.util.schedulersIoToMain
+import com.g2pdev.translator.base.schedulersIoToMain
 import moxy.InjectViewState
 import timber.log.Timber
 import javax.inject.Inject

@@ -8,7 +8,7 @@ import com.g2pdev.simpletranslator.interactor.translation.models.ListenModelDown
 import com.g2pdev.simpletranslator.translation.model.ModelState
 import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BasePresenter
-import com.g2pdev.simpletranslator.util.schedulersIoToMain
+import com.g2pdev.translator.base.schedulersIoToMain
 import moxy.InjectViewState
 import timber.log.Timber
 import javax.inject.Inject
