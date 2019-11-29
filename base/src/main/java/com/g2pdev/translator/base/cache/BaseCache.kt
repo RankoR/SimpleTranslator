@@ -1,4 +1,4 @@
-package com.g2pdev.translator.base
+package com.g2pdev.translator.base.cache
 
 import android.content.Context
 import androidx.core.content.edit

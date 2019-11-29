@@ -13,7 +13,7 @@ import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.translation.model.TranslationModel
 import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpBottomSheetFragment
-import com.g2pdev.translator.base.schedulersIoToMain
+import com.g2pdev.translator.base.extension.schedulersIoToMain
 import com.jakewharton.rxbinding3.widget.textChanges
 import kotlinx.android.synthetic.main.fragment_translation_models.*
 import moxy.presenter.InjectPresenter

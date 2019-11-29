@@ -14,7 +14,7 @@ import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
 import com.g2pdev.simpletranslator.ui.mvp.language.TranslationModelsFragment
 import com.g2pdev.simpletranslator.ui.mvp.language.TranslationModelsPresenter
 import com.g2pdev.simpletranslator.ui.mvp.language.download.ModelDownloadRequiredFragment
-import com.g2pdev.translator.base.schedulersIoToMain
+import com.g2pdev.translator.base.extension.schedulersIoToMain
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

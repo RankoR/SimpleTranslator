@@ -1,4 +1,4 @@
-package com.g2pdev.translator.base
+package com.g2pdev.translator.base.extension
 
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
