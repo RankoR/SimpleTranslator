@@ -20,9 +20,9 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
-                        "room.schemaLocation":"$projectDir/schemas".toString(),
-                        "room.incremental":"true",
-                        "room.expandProjection":"true"]
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
             }
         }
     }
@@ -59,14 +59,14 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.1.0'
 
     // Room
-    implementation 'androidx.room:room-runtime:2.2.2'
-    kapt 'androidx.room:room-compiler:2.2.2'
-    implementation 'androidx.room:room-ktx:2.2.2'
-    implementation 'androidx.room:room-rxjava2:2.2.2'
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
 
     // Work
-    implementation 'androidx.work:work-runtime-ktx:2.2.0'
-    implementation 'androidx.work:work-rxjava2:2.2.0'
+    implementation "androidx.work:work-runtime-ktx:$androidx_work_version"
+    implementation "androidx.work:work-rxjava2:$androidx_work_version"
 
     // Firebase
     implementation 'com.google.firebase:firebase-analytics:17.2.1'
@@ -74,22 +74,22 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-natural-language-translate-model:20.0.7'
 
     // RxJava
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.13'
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
-    implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0'
-    implementation 'com.jakewharton.rxbinding3:rxbinding-material:3.0.0'
+    implementation "com.jakewharton.rxbinding3:rxbinding-core:$rxbinding_version"
+    implementation "com.jakewharton.rxbinding3:rxbinding-material:$rxbinding_version"
 
     // Dagger
-    api 'com.google.dagger:dagger:2.25.2'
-    kapt 'com.google.dagger:dagger-compiler:2.25.2'
+    api "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     // Moxy
-    implementation 'com.github.moxy-community:moxy:2.0.2'
-    implementation 'com.github.moxy-community:moxy-androidx:2.0.2'
-    implementation 'com.github.moxy-community:moxy-material:2.0.2'
-    implementation 'com.github.moxy-community:moxy-ktx:2.0.2'
-    kapt 'com.github.moxy-community:moxy-compiler:2.0.2'
+    implementation "com.github.moxy-community:moxy:$moxy_version"
+    implementation "com.github.moxy-community:moxy-androidx:$moxy_version"
+    implementation "com.github.moxy-community:moxy-material:$moxy_version"
+    implementation "com.github.moxy-community:moxy-ktx:$moxy_version"
+    kapt "com.github.moxy-community:moxy-compiler:$moxy_version"
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -100,7 +100,7 @@ dependencies {
     // JodaTime
     implementation 'joda-time:joda-time:2.10.4'
 
-    // Json
+    // Gson
     implementation 'com.google.code.gson:gson:2.8.6'
 
     // Tests
