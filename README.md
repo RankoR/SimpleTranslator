@@ -4,7 +4,11 @@ This is an app to demonstrate Firebase MLKit Translation implementation for Andr
 
 # Sub modules
 
-[Base modules](https://github.com/RankoR/SimpleTranslator-Base) are required to build this project.
+[Base modules](https://github.com/RankoR/SimpleTranslator-Base) are required to build this project:
+
+```
+$ git submodule add https://github.com/RankoR/SimpleTranslator-Base base_modules
+```
 
 # TODO
 
