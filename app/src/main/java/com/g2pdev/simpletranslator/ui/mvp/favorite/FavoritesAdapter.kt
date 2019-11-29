@@ -3,7 +3,6 @@ package com.g2pdev.simpletranslator.ui.mvp.favorite
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -59,8 +58,9 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
         private val targetLanguageTv: TextView = itemView.findViewById(R.id.targetLanguageTv)
         private val targetTextTv: TextView = itemView.findViewById(R.id.targetTextTv)
 
-        private val copyBtn: Button = itemView.findViewById(R.id.copyBtn)
-        private val shareBtn: Button = itemView.findViewById(R.id.shareBtn)
+        private val overflowBtn: View = itemView.findViewById(R.id.overflowBtn)
+        private val copyBtn: View = itemView.findViewById(R.id.copyBtn)
+        private val shareBtn: View = itemView.findViewById(R.id.shareBtn)
 
         init {
             copyBtn.setOnClickListener {

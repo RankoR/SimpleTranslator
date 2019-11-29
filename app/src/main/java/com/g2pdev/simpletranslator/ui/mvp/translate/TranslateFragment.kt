@@ -56,6 +56,10 @@ class TranslateFragment : BaseMvpFragment(
             findNavController().navigate(TranslateFragmentDirections.translateFragmentToFavoritesFragment())
         }
 
+        settingsBtn.setOnClickListener {
+            presenter.openDownloadLanguagesClick()
+        }
+
         clearSourceTextBtn.setOnClickListener {
             presenter.clearSourceText()
         }
@@ -140,14 +144,16 @@ class TranslateFragment : BaseMvpFragment(
 
     override fun showModelRequired(languagePair: LanguagePair) {
         val fragment = ModelDownloadRequiredFragment.newInstance(languagePair)
-        fragment.onDownloadClickListener = {
-            val translationFragment = TranslationModelsFragment.newInstance(TranslationModelsPresenter.ScreenType.DOWNLOADER)
-            translationFragment.onCloseListener = {
-                presenter.loadTranslationLanguagesAndReTranslate()
-            }
-            translationFragment.show(fragmentManager)
-        }
+        fragment.onDownloadClickListener = presenter::openDownloadLanguagesClick
         fragment.show(fragmentManager)
+    }
+
+    override fun openDownloadModelsScreen() {
+        val translationFragment = TranslationModelsFragment.newInstance(TranslationModelsPresenter.ScreenType.DOWNLOADER)
+        translationFragment.onCloseListener = {
+            presenter.loadTranslationLanguagesAndReTranslate()
+        }
+        translationFragment.show(fragmentManager)
     }
 
     override fun enableAddToFavorites(enable: Boolean) {

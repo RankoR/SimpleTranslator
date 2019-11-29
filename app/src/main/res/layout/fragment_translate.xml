@@ -19,14 +19,15 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/favoritesBtn"
             android:layout_width="wrap_content"
-            android:layout_height="28dp"
+            android:layout_height="24dp"
             android:layout_marginStart="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_bookmark_white" />
+            app:srcCompat="@drawable/ic_bookmark_dark_not_filled" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="0dp"
@@ -45,8 +46,9 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/settingsBtn"
             android:layout_width="wrap_content"
-            android:layout_height="28dp"
+            android:layout_height="24dp"
             android:layout_marginEnd="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -175,12 +177,14 @@
 
             <TextView
                 android:id="@+id/targetTv"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="16dp"
                 android:importantForAutofill="no"
                 android:paddingBottom="48dp"
                 android:textAppearance="@style/Body1"
+                app:layout_constraintEnd_toStartOf="@id/actionsLayout"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Test translation" />
 

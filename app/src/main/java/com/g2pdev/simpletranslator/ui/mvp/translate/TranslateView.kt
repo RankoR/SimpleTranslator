@@ -61,4 +61,7 @@ interface TranslateView : MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showTargetActions(show: Boolean)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun openDownloadModelsScreen()
 }

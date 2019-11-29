@@ -262,4 +262,8 @@ class TranslatePresenter : BasePresenter<TranslateView>() {
         viewState.clearSourceText()
     }
 
+    fun openDownloadLanguagesClick() {
+        viewState.openDownloadModelsScreen()
+    }
+
 }

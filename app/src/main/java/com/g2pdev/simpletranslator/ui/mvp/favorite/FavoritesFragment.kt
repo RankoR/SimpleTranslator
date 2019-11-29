@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
@@ -30,6 +31,10 @@ class FavoritesFragment : BaseMvpFragment(), FavoritesView {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
+
+        backBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun initRecyclerView() {

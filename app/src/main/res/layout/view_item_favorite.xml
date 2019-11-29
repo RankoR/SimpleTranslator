@@ -6,18 +6,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
     android:layout_marginTop="8dp"
-    android:minHeight="100dp">
+    android:layout_marginEnd="8dp"
+    android:minHeight="100dp"
+    app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/sourceLanguageTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/Subtitle2"
+            android:textColor="@color/colorAccent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="English" />
 
@@ -26,8 +31,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:textAppearance="@style/Body1"
             app:layout_constraintTop_toBottomOf="@id/sourceLanguageTv"
             tools:text="Hello, world!" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/overflowBtn"
+            android:layout_width="12dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_overflow" />
 
         <View
             android:id="@+id/dividerView"
@@ -42,36 +58,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:textAppearance="@style/Subtitle2"
+            android:textColor="@color/colorAccent"
             app:layout_constraintTop_toBottomOf="@id/dividerView"
             tools:text="Russian" />
 
         <TextView
             android:id="@+id/targetTextTv"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:textAppearance="@style/Body1"
+            app:layout_constraintEnd_toStartOf="@id/actionsLayout"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/targetLanguageTv"
             tools:text="Привет, мир!" />
 
         <LinearLayout
+            android:id="@+id/actionsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/targetTextTv">
+            app:layout_constraintTop_toBottomOf="@id/dividerView">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/copyBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="24dp"
                 android:layout_height="wrap_content"
-                android:text="Copy" />
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_copy" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/shareBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="24dp"
                 android:layout_height="wrap_content"
-                android:text="Share" />
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_share" />
 
         </LinearLayout>
 
