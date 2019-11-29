@@ -187,6 +187,7 @@ gradle/
 gradlew
 gradlew.bat
 settings.gradle
+/base_modules
 
 # Sensitive
 /app/google-services.json
