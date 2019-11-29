@@ -1,12 +1,12 @@
 package com.g2pdev.simpletranslator.ui.mvp.language
 
 import com.g2pdev.simpletranslator.di.DiHolder
-import com.g2pdev.simpletranslator.interactor.translation.models.DeleteModel
+import com.g2pdev.translation.translation.interactor.model.DeleteModel
 import com.g2pdev.simpletranslator.interactor.translation.models.EnqueueDownloadModel
-import com.g2pdev.simpletranslator.interactor.translation.models.ListModels
-import com.g2pdev.simpletranslator.interactor.translation.models.ListenModelDownloadingStateChanges
-import com.g2pdev.simpletranslator.translation.model.ModelState
-import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
+import com.g2pdev.translation.translation.interactor.model.ListModels
+import com.g2pdev.translation.translation.interactor.model.ListenModelDownloadingStateChanges
+import com.g2pdev.translation.translation.model.ModelState
+import com.g2pdev.translation.translation.model.TranslationModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BasePresenter
 import com.g2pdev.translator.base.extension.schedulersIoToMain
 import moxy.InjectViewState

@@ -3,8 +3,8 @@ package com.g2pdev.simpletranslator.interactor.translation.models
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.g2pdev.simpletranslator.translation.TranslationModelSerializer
-import com.g2pdev.simpletranslator.translation.model.TranslationModel
+import com.g2pdev.translation.translation.util.TranslationModelSerializer
+import com.g2pdev.translation.translation.model.TranslationModel
 import com.g2pdev.simpletranslator.work.DownloadModelWorker
 
 interface EnqueueDownloadModel {

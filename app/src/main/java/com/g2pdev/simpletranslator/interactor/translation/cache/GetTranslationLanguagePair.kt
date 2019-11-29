@@ -1,10 +1,10 @@
 package com.g2pdev.simpletranslator.interactor.translation.cache
 
+import com.g2pdev.translation.translation.util.LanguageNameProvider
 import com.g2pdev.simpletranslator.cache.TranslationModelsCache
-import com.g2pdev.simpletranslator.translation.language.Language
-import com.g2pdev.simpletranslator.translation.language.LanguageNameProvider
-import com.g2pdev.simpletranslator.translation.language.LanguagePair
-import com.g2pdev.simpletranslator.translation.model.TranslationModel
+import com.g2pdev.translation.translation.language.Language
+import com.g2pdev.translation.translation.language.LanguagePair
+import com.g2pdev.translation.translation.model.TranslationModel
 import io.reactivex.Single
 import timber.log.Timber
 import java.util.*

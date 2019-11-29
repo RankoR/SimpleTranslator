@@ -1,7 +1,7 @@
 package com.g2pdev.simpletranslator.language
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.g2pdev.simpletranslator.translation.language.Language
+import com.g2pdev.translation.translation.language.Language
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

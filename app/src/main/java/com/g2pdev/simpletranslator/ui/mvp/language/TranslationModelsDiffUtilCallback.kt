@@ -1,7 +1,7 @@
 package com.g2pdev.simpletranslator.ui.mvp.language
 
 import androidx.recyclerview.widget.DiffUtil
-import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
+import com.g2pdev.translation.translation.model.TranslationModelWithState
 
 class TranslationModelsDiffUtilCallback(
     private val oldList: List<TranslationModelWithState>,

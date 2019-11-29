@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
 import com.g2pdev.simpletranslator.di.DiHolder
-import com.g2pdev.simpletranslator.interactor.translation.models.DownloadModel
-import com.g2pdev.simpletranslator.translation.TranslationModelSerializer
-import com.g2pdev.simpletranslator.translation.model.TranslationModel
+import com.g2pdev.translation.translation.interactor.model.DownloadModel
+import com.g2pdev.translation.translation.util.TranslationModelSerializer
+import com.g2pdev.translation.translation.model.TranslationModel
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers

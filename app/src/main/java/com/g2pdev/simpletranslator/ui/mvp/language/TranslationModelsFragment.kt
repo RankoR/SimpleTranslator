@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
-import com.g2pdev.simpletranslator.translation.model.TranslationModel
-import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
+import com.g2pdev.translation.translation.model.TranslationModel
+import com.g2pdev.translation.translation.model.TranslationModelWithState
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpBottomSheetFragment
 import com.g2pdev.translator.base.extension.schedulersIoToMain
 import com.jakewharton.rxbinding3.widget.textChanges

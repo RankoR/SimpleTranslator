@@ -8,8 +8,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
-import com.g2pdev.simpletranslator.translation.model.ModelState
-import com.g2pdev.simpletranslator.translation.model.TranslationModelWithState
+import com.g2pdev.translation.translation.model.ModelState
+import com.g2pdev.translation.translation.model.TranslationModelWithState
 
 class TranslationModelsAdapter : RecyclerView.Adapter<TranslationModelsAdapter.ViewHolder>() {
 

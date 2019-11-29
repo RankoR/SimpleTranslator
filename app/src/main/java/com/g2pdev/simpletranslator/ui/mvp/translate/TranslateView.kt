@@ -1,6 +1,6 @@
 package com.g2pdev.simpletranslator.ui.mvp.translate
 
-import com.g2pdev.simpletranslator.translation.language.LanguagePair
+import com.g2pdev.translation.translation.language.LanguagePair
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.OneExecutionStateStrategy

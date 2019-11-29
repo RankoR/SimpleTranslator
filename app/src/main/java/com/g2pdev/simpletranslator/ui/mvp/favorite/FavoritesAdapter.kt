@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.g2pdev.simpletranslator.R
 import com.g2pdev.simpletranslator.db.FavoriteTranslation
 import com.g2pdev.simpletranslator.di.DiHolder
-import com.g2pdev.simpletranslator.translation.language.Language
-import com.g2pdev.simpletranslator.translation.language.LanguageNameProvider
+import com.g2pdev.translation.translation.language.Language
+import com.g2pdev.translation.translation.util.LanguageNameProvider
 import javax.inject.Inject
 
 class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {

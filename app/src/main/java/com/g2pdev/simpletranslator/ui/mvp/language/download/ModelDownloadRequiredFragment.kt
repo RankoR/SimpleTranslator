@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import com.g2pdev.simpletranslator.R
-import com.g2pdev.simpletranslator.translation.language.LanguagePair
+import com.g2pdev.translation.translation.language.LanguagePair
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseBottomSheetFragment
 import kotlinx.android.synthetic.main.fragment_dialog_model_download_required.*
 

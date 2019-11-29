@@ -1,7 +1,7 @@
 package com.g2pdev.simpletranslator.cache
 
 import android.content.Context
-import com.g2pdev.simpletranslator.translation.language.LanguagePair
+import com.g2pdev.translation.translation.language.LanguagePair
 import com.g2pdev.translator.base.cache.BaseCache
 import com.google.gson.Gson
 import io.reactivex.Completable
@@ -15,7 +15,10 @@ interface TranslationModelsCache {
 class TranslationModelsCacheImpl(
     gson: Gson,
     context: Context
-) : BaseCache<LanguagePair>(gson, key, context, name), TranslationModelsCache {
+) : BaseCache<LanguagePair>(gson,
+    key, context,
+    name
+), TranslationModelsCache {
 
     override fun getType() = LanguagePair::class.java
 

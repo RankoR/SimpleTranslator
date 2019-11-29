@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.g2pdev.simpletranslator.R
-import com.g2pdev.simpletranslator.translation.language.LanguagePair
+import com.g2pdev.translation.translation.language.LanguagePair
 import com.g2pdev.simpletranslator.ui.mvp.base.BaseMvpFragment
 import com.g2pdev.simpletranslator.ui.mvp.language.TranslationModelsFragment
 import com.g2pdev.simpletranslator.ui.mvp.language.TranslationModelsPresenter

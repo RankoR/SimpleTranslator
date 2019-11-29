@@ -1,7 +1,7 @@
 package com.g2pdev.simpletranslator.interactor.tts
 
 import com.g2pdev.simpletranslator.repository.tts.TextToSpeechRepository
-import com.g2pdev.simpletranslator.translation.language.Language
+import com.g2pdev.translation.translation.language.Language
 import io.reactivex.Completable
 
 interface CheckIfTtsLanguageAvailable {
