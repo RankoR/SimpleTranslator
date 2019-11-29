@@ -16,6 +16,7 @@ $ git submodule add https://github.com/RankoR/SimpleTranslator-Base base_modules
 * Move favorites to separate module
 * Fix some design issues
 * Publish on Google Play
+* Add Firebase credits to app
 
 # Icons
 
